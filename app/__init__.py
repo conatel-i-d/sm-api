@@ -20,19 +20,7 @@ def create_app(env=None):
     api_title = os.environ.get('APP_TITLE', config.TITLE)
     api_version = os.environ.get('APP_VERSION', config.VERSION)
     api_description = """
-    API de ejemplo, para mostrar como se deben construir APIs con `flask`.
-
-    La idea detras de este proyecto es simplificar la construcción de API con `flask`.
-    Se incluyen un montón de opiniones sobre como se deben solucionar los problemas
-    típicos que surgen cuando se crea una API, como: validación, paginación, autenticación,
-    etc.
-
-    Se incluyen ejemplos que muestran como se puede construir la documentación del sitio de forma
-    automatica, utilizando `flask_restplus`.
-
-    Por último, se incluyen ejemplos sobre como se pueden construir `tests` sobre los 
-    distintos componentes de la `app`. Cuantas más `tests` se incluyan, más manenible
-    es el proyecto.
+    API del Conatel Switch Manager
     """
     api = ApiFlask(app, 
         title=api_title, 
