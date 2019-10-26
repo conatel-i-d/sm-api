@@ -11,6 +11,7 @@ class Switch(db.Model):  # type: ignore
     name = Column(String(255))
     description = Column(String(255))
     model = Column(String(255))
+    ip = Column(String(15))
 
     def update(self, changes):
         for key, val in changes.items():

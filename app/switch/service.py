@@ -32,7 +32,7 @@ class SwitchService:
 
     @staticmethod
     def create(new_attrs) -> Switch:
-        model = Switch(*new_attrs)
+        model = Switch(**new_attrs)
 
         db.session.add(model)
         db.session.commit()

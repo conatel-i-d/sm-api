@@ -8,7 +8,7 @@ class SwitchInterfaces(BaseInterfaces):
     )
     name = dict(
         m=marshmallow_fields.String(attribute='name'),
-        r=restplus_fields.String(description='Nombre del Switch', required=False, example='sw-core-1'),
+        r=restplus_fields.String(description='Nombre del Switch', required=True, example='sw-core-1'),
     )
     description = dict(
         m=marshmallow_fields.String(attribute='description'),
@@ -22,5 +22,13 @@ class SwitchInterfaces(BaseInterfaces):
             example='Cisco 2960x'    
         )
     )
-    create_model_keys = ['name', 'description', 'model']
-    update_model_keys = ['name', 'description', 'model']
+    ip = dict(
+        m=marshmallow_fields.String(attribute='ip'),
+        r=restplus_fields.String(
+            description='Dirección IP para la administración del switch',
+            required=True,
+            example='192.168.1.1'    
+        )
+    )
+    create_model_keys = ['name', 'description', 'model', 'ip']
+    update_model_keys = ['name', 'description', 'model', 'ip']
