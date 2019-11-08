@@ -1,9 +1,12 @@
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
-from .task import get_nics
+# from .task import get_nics
 from app.api_response import ApiResponse
 # from .interfaces import SwitchInterfaces
+import app
+
+import time
 
 api_description = """
 Representación de los switches de la empresa.
@@ -27,13 +30,13 @@ class InterfaceResource(Resource):
 
 
     # @api.response(200, 'Lista de Interfaces', interfaces.many_response_model)
+
     def get(self):
         """
         Devuelve la lista de Interfaces
         """
-        task = get_nics.delay()
-        async_result = get_nics.async_result(id=task.id)
-        return ApiResponse({ "hola": async_result }) #async_result
+
+        return ApiResponse({ "hola": result }) #async_result
 
 #     @api.expect(interfaces.create_model)
 #     @api.response(200, 'Nuevo Switch', interfaces.single_response_model)

@@ -2,19 +2,15 @@ import os
 from flask import jsonify, Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_restplus import Resource, apidoc
-from app.utils.celery import make_celery
 from app.api_flask import ApiFlask
-
 db = SQLAlchemy()
-
+from flask.ext.aiohttp import AioHTTP
 
 def create_app(env=None):
     from app.config import config_by_name
     from app.routes import register_routes
     from app.errors import register_error_handlers
-    from celery import Celery
 
-    
     # Creamos la aplicación de Flask
     app = Flask(__name__, template_folder='./templates')
     config = config_by_name[env or "test"]
@@ -41,12 +37,8 @@ def create_app(env=None):
     # Inicializamos la base de datos
     db.init_app(app)
 
-    #Configuramos celery para las tareas asíncronas
-    app.config.update(
-        CELERY_BROKER_URL='redis://redis:6379',
-        CELERY_RESULT_BACKEND='redis://redis:6379'
-    )
-    celery = make_celery(app)
+    #Config flask async
+    aio = AioHTTP(app)
 
     # Configuración de página de documentación
     @api.documentation
