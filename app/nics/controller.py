@@ -1,12 +1,13 @@
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
-# from .task import get_nics
 from app.api_response import ApiResponse
-# from .interfaces import SwitchInterfaces
-import app
-
-import time
+#async dependencies
+from app.utils.async_action import async_action
+from app.utils.awx import awx_fetch
+import asyncio
+import aiohttp
+import json
 
 api_description = """
 Representación de los switches de la empresa.
@@ -31,12 +32,15 @@ class InterfaceResource(Resource):
 
     # @api.response(200, 'Lista de Interfaces', interfaces.many_response_model)
 
-    def get(self):
+    @async_action
+    async def get(self):
         """
         Devuelve la lista de Interfaces
         """
-
-        return ApiResponse({ "hola": result }) #async_result
+        await asyncio.sleep(5)
+        contador = 0
+        result = await awx_fetch('/api/v2/hosts')
+        return { "total": contador, "result": result }
 
 #     @api.expect(interfaces.create_model)
 #     @api.response(200, 'Nuevo Switch', interfaces.single_response_model)
