@@ -28,5 +28,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN celery -A app.celery worker --loglevel=info
+
 CMD ["/usr/bin/supervisord"]
 

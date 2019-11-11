@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restplus import Resource, apidoc
 from app.api_flask import ApiFlask
 db = SQLAlchemy()
-from flask.ext.aiohttp import AioHTTP
 
 def create_app(env=None):
     from app.config import config_by_name
@@ -36,9 +35,6 @@ def create_app(env=None):
     register_error_handlers(app)
     # Inicializamos la base de datos
     db.init_app(app)
-
-    #Config flask async
-    aio = AioHTTP(app)
 
     # Configuración de página de documentación
     @api.documentation
