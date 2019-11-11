@@ -11,6 +11,10 @@ class ResultService:
     @staticmethod
     def get_by_id(id: int) -> Result:
         return Result.query.get(id)
+    
+    @staticmethod
+    def get(conditions: object) -> Result:
+        return Result.query.get(conditions)
 
     @staticmethod
     def update(id: int, body) -> Result:

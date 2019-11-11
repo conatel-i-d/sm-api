@@ -8,6 +8,7 @@ class Result(db.Model):  # type: ignore
     __tablename__ = "result"
 
     id = Column(Integer(), primary_key=True)
+    job_id = Column(Integer(), unique=True)
     type = Column(String(255))
     data = Column(JSON)
 

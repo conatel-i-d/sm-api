@@ -6,6 +6,7 @@ from app.api_response import ApiResponse
 from app.utils.async_action import async_action
 from app.utils.awx import awx_fetch, awx_post
 from app.switch.service import SwitchService
+from app.results.service import ResultService
 import asyncio
 import aiohttp
 import json
@@ -65,7 +66,9 @@ class InterfaceResource(Resource):
                     if (job_status_result["status"] == "failed"):
                         return ApiResponse({ "Error": "Playbook execution error" }, 400)
                     if (job_status_result["status"] == "successful"):
-                        return ApiResponse({ "job_id": job_id, "job_status": job_status_result["status"]})
+                        rcv_result = ResultService.get({ job_id: job_id })
+                        if (rcv_result != None):
+                            return ApiResponse(json.loads(rcv_result.result))
                     # elif (job_status_result["status"] != "waiting" and job_status_result["status"] != "running"):
                     #     return ApiResponse({ "Error": "Job status unrecognized" }, 400)
                     await asyncio.sleep(2)
