@@ -6,6 +6,7 @@ import json
 awx_base_url = 'http://web:8052'
 auth = aiohttp.BasicAuth(os.environ.get('AWX_USER'), os.environ.get('AWX_PASSWORD'))
 timeout = ClientTimeout(total=60)
+
 async def awx_fetch(endpoint):
     url = awx_base_url + endpoint
 

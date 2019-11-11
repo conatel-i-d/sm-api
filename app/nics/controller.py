@@ -68,7 +68,6 @@ class InterfaceResource(Resource):
             return ApiResponse({ "Error": str(e) }, 400)
             
 
-        
 
 #     @api.expect(interfaces.create_model)
 #     @api.response(200, 'Nuevo Switch', interfaces.single_response_model)
