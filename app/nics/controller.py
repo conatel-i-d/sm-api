@@ -66,9 +66,10 @@ class InterfaceResource(Resource):
                     if (job_status_result["status"] == "failed"):
                         return ApiResponse({ "Error": "Playbook execution error" }, 400)
                     if (job_status_result["status"] == "successful"):
-                        rcv_result = ResultService.get({ job_id: job_id })
+                        rcv_result = ResultService.get({ "job_id": job_id })
                         if (rcv_result != None):
-                            return ApiResponse(json.loads(rcv_result.result))
+                            ResultService.delete_by_id(rcv_result.id)
+                            return ApiResponse(rcv_result.result)
                     # elif (job_status_result["status"] != "waiting" and job_status_result["status"] != "running"):
                     #     return ApiResponse({ "Error": "Job status unrecognized" }, 400)
                     await asyncio.sleep(2)

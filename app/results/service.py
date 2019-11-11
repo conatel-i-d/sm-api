@@ -13,8 +13,8 @@ class ResultService:
         return Result.query.get(id)
     
     @staticmethod
-    def get(conditions: object) -> Result:
-        return Result.query.get(conditions)
+    def get(conditions) -> Result:
+        return Result.query.filter_by(**conditions).first()
 
     @staticmethod
     def update(id: int, body) -> Result:
