@@ -61,7 +61,7 @@ class InterfaceResource(Resource):
                 else:
                     return ApiResponse({ "Error": 'The template ' + os.environ.get('ENV')  + '-show-interfaces-information not found'}, 400)
                 
-                for i in range(15):
+                for i in range(60):
                     job_status_result = await awx_fetch('/api/v2/jobs/' + str(job_id) + '/')
                     if (job_status_result["status"] == "failed"):
                         return ApiResponse({ "Error": "Playbook execution error" }, 400)
@@ -72,7 +72,7 @@ class InterfaceResource(Resource):
                             return ApiResponse(rcv_result.result)
                     # elif (job_status_result["status"] != "waiting" and job_status_result["status"] != "running"):
                     #     return ApiResponse({ "Error": "Job status unrecognized" }, 400)
-                    await asyncio.sleep(2)
+                    await asyncio.sleep(1)
                 return ApiResponse({ "Error": "Playbook execution timeout error" }, 400)
         except Exception as e:
             return ApiResponse({ "Error": str(e) }, 400)
