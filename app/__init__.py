@@ -36,6 +36,8 @@ def create_app(env=None):
     # Inicializamos la base de datos
     db.init_app(app)
 
+    print(app.url_map)
+
     # Configuración de página de documentación
     @api.documentation
     # pylint: disable=unused-variable
