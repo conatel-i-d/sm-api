@@ -1,4 +1,4 @@
-BASE_ROUTE = "nics"
+BASE_ROUTE = "switch"
 
 def register_routes(api, app, root="api"):
     from .controller import api as nics_api
