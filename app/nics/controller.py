@@ -76,7 +76,63 @@ class InterfaceResource(Resource):
                 return ApiResponse({ "Error": "Playbook execution timeout error" }, 400)
         except Exception as e:
             return ApiResponse({ "Error": str(e) }, 400)
-            
+
+@api.route("/<int:switch_id>/nics/reset")
+@api.param("switch_id", "Identificador único del Switch")
+class InterfaceResource(Resource):
+    """
+    Interface Resource
+    """
+
+    @async_action
+    async def post(self, switch_id: int):
+        """
+        Devuelve la lista de Interfaces
+        """
+        nic_name = request.args.get('nic_name')
+        # List jobs templates
+        # '/api/v2/job_templates/'
+        try:
+            switch = SwitchService.get_by_id(switch_id)
+            if (switch == None):
+                return ApiResponse({ "Error": 'Switch not found'}, 400)
+            else:
+                result = await awx_fetch('/api/v2/job_templates/')
+                templates =  result["results"]
+                template = None
+                if (os.environ.get('ENV') == 'prod'):
+                    templateList = list(filter(lambda x: x["name"] == "prod-reset-interface", templates))
+                    if (len(templateList) > 0):
+                        template = templateList[0]
+                else:
+                    templateList = list(filter(lambda x: x["name"] == "test-reset-interface", templates))
+                    if (len(templateList) > 0):
+                        template = templateList[0]
+                
+                if (template != None):
+                    launch_result = await awx_post('/api/v2/job_templates/' + str(template["id"]) + '/launch/',
+                    { 
+                        "limit": switch.name,
+                        "extra_vars": {
+                            "interface_name": nic_name
+                        }
+                    })
+                    job_id = launch_result["job"]
+                else:
+                    return ApiResponse({ "Error": 'The template ' + os.environ.get('ENV')  + '-reset-interface not found'}, 400)
+                
+                for i in range(60):
+                    job_status_result = await awx_fetch('/api/v2/jobs/' + str(job_id) + '/')
+                    if (job_status_result["status"] == "failed"):
+                        return ApiResponse({ "Error": "Playbook execution error" }, 400)
+                    if (job_status_result["status"] == "successful"):
+                            return ApiResponse(None)
+                    # elif (job_status_result["status"] != "waiting" and job_status_result["status"] != "running"):
+                    #     return ApiResponse({ "Error": "Job status unrecognized" }, 400)
+                    await asyncio.sleep(1)
+                return ApiResponse({ "Error": "Playbook execution timeout error" }, 400)
+        except Exception as e:
+            return ApiResponse({ "Error": str(e) }, 400)
 
 
 #     @api.expect(interfaces.create_model)
