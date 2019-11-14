@@ -1,6 +1,11 @@
-from flask import request, Blueprint, Response
-from app.api_response import Response
 import json
+import os
+import requests
+
+
+from app.api_response import Response
+from flask import request, Blueprint, Response
+
 api_description = """
 Rutas de authenticacion a la API
 """
@@ -20,18 +25,16 @@ def get_token():
         'username': body['username'],
         'password': body['password']
     }
-    url = ''.join([
-        os.getenv('KEYCLOAK_URL'),
-        'realms/',
-        os.getenv('REALM'),
-        '/protocol/openid-connect/token'
-    ])
+    url = os.getenv('KEYCLOAK_URL') + 'realms/' + \
+        os.getenv('REALM') + '/protocol/openid-connect/token'
     response = requests.post(url, data=data)
+    if response.status_code != requests.codes.ok:
+        return Response(response.text, 400, mimetype='application/json')
     tokens_data = response.json()
-    result = {
-        'tokens': {"access_token": tokens_data['access_token'],
-                   "refresh_token": tokens_data['refresh_token'], }
-    }
+
+    result = {"access_token": tokens_data['access_token'],
+              "refresh_token": tokens_data['refresh_token'], }
+
     return Response(json.dumps(result), 200, mimetype='application/json')
 
 
@@ -49,6 +52,8 @@ def refresh_token():
         os.getenv('REALM') + '/protocol/openid-connect/token'
     response = requests.post(url, data=data)
     data = response.json()
+    if response.status_code != requests.codes.ok:
+        return Response(response.text, 400, mimetype='application/json')
     result = {
         "access_token": data['access_token'],
         "refresh_token": data['refresh_token']
