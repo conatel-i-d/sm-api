@@ -61,7 +61,7 @@ class InterfaceResource(Resource):
                 else:
                     return ApiResponse({ "Error": 'The template ' + os.environ.get('ENV')  + '-show-interfaces-information not found'}, 400)
                 
-                for i in range(60):
+                for i in range(50):
                     job_status_result = await awx_fetch('/api/v2/jobs/' + str(job_id) + '/')
                     if (job_status_result["status"] == "failed"):
                         return ApiResponse({ "Error": "Playbook execution error" }, 400)
