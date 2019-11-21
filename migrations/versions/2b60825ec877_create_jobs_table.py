@@ -1,4 +1,4 @@
-"""create results table
+"""create jobs table
 
 Revision ID: 2b60825ec877
 Revises: 7e633f4a3f96
@@ -18,7 +18,7 @@ depends_on = None
 
 def upgrade():
   op.create_table(
-        'result',
+        'jobs',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('job_id', sa.Integer, nullable=False, unique=True),
         sa.Column('type', sa.String(255), nullable=False),

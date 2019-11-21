@@ -3,16 +3,16 @@ from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 
 from app.api_response import ApiResponse
-from .service import ResultService
-from .model import Result
-from .interfaces import ResultInterfaces
+from .service import JobService
+from .model import Job
+from .interfaces import JobInterfaces
 
 api_description = """
-Representación de los Results de la empresa.
+Representación de los Jobs de la empresa.
 """
 
-api = Namespace('Results', description=api_description)
-interfaces = ResultInterfaces(api)
+api = Namespace('Jobs', description=api_description)
+interfaces = JobInterfaces(api)
 
 @api.route("/")
 @api.response(400, 'Bad Request', interfaces.error_response_model)
@@ -23,35 +23,35 @@ interfaces = ResultInterfaces(api)
     502: 'Bad Gateway',
     503: 'Service Unavailable',
 })
-class ResultResource(Resource):
+class JobResource(Resource):
     """
-    Results Resource
+    Jobs Resource
     """
 
-    @api.response(200, 'Lista de Results', interfaces.many_response_model)
+    @api.response(200, 'Lista de Jobs', interfaces.many_response_model)
     def get(self):
         """
-        Devuelve la lista de Results
+        Devuelve la lista de Jobs
         """
-        entities = ResultService.get_all()
+        entities = JobService.get_all()
         return ApiResponse(interfaces.many_schema.dump(entities).data)
 
     @api.expect(interfaces.create_model)
-    @api.response(200, 'Nuevo Result', interfaces.single_response_model)
+    @api.response(200, 'Nuevo Job', interfaces.single_response_model)
     def post(self):
         """
-        Crea un nuevo Result.
+        Crea un nuevo Job.
         """
         json_data = request.get_json()
         if json_data is None:
             raise Exception('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
-        Result = ResultService.create(body)
-        return ApiResponse(interfaces.single_schema.dump(Result).data)
+        Job = JobService.create(body)
+        return ApiResponse(interfaces.single_schema.dump(Job).data)
 
 
 @api.route("/<int:id>")
-@api.param("id", "Identificador único del Result")
+@api.param("id", "Identificador único del Job")
 @api.response(400, 'Bad Request', interfaces.error_response_model)
 @api.doc(responses={
     401: 'Unauthorized',
@@ -60,31 +60,31 @@ class ResultResource(Resource):
     502: 'Bad Gateway',
     503: 'Service Unavailable',
 })
-class ResultIdResource(Resource):
-    @api.response(200, 'Result', interfaces.single_response_model)
+class JobIdResource(Resource):
+    @api.response(200, 'Job', interfaces.single_response_model)
     def get(self, id: int):
         """
-        Obtiene un único Result por ID.
+        Obtiene un único Job por ID.
         """
-        Result = ResultService.get_by_id(id)
-        return ApiResponse(interfaces.single_schema.dump(Result).data)
+        Job = JobService.get_by_id(id)
+        return ApiResponse(interfaces.single_schema.dump(Job).data)
 
     @api.response(204, 'No Content')
     def delete(self, id: int) -> Response:
         """
-        Elimina un único Result por ID.
+        Elimina un único Job por ID.
         """
         from flask import jsonify
 
-        id = ResultService.delete_by_id(id)
+        id = JobService.delete_by_id(id)
         return ApiResponse(None, 204)
 
     @api.expect(interfaces.update_model)
-    @api.response(200, 'Result Actualizado', interfaces.single_response_model)
+    @api.response(200, 'Job Actualizado', interfaces.single_response_model)
     def put(self, id: int):
         """
-        Actualiza un único Result por ID.
+        Actualiza un único Job por ID.
         """
         body = interfaces.single_schema.load(request.json).data
-        Result = ResultService.update(id, body)
-        return ApiResponse(interfaces.single_schema.dump(Result).data)
+        Job = JobService.update(id, body)
+        return ApiResponse(interfaces.single_schema.dump(Job).data)

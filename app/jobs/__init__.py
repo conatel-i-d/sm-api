@@ -1,6 +1,6 @@
-from .model import Result
+from .model import Job
 
-BASE_ROUTE = "results"
+BASE_ROUTE = "jobs"
 
 def register_routes(api, app, root="api"):
     from .controller import api as results_api

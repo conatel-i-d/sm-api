@@ -2,8 +2,8 @@ import json
 import os
 import requests
 
-
 from app.api_response import Response
+from app import create_app
 from flask import request, Blueprint, Response
 
 api_description = """
