@@ -1,7 +1,7 @@
 from app.utils.base_interfaces_test import BaseInterfaces, marshmallow_fields, restplus_fields
 
-class ResultInterfaces(BaseInterfaces):
-    __name__ = 'Result'
+class JobInterfaces(BaseInterfaces):
+    __name__ = 'Job'
     id = dict(
         m=marshmallow_fields.Int(attribute='id', dump_only=True),
         r=restplus_fields.Integer(description='Identificador único', required=True, example=123),

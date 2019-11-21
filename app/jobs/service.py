@@ -1,24 +1,24 @@
 from app import db
 from typing import List
-from .model import Result
+from .model import Job
 
 
-class ResultService:
+class JobService:
     @staticmethod
-    def get_all() -> List[Result]:
-        return Result.query.all()
+    def get_all() -> List[Job]:
+        return Job.query.all()
 
     @staticmethod
-    def get_by_id(id: int) -> Result:
-        return Result.query.get(id)
+    def get_by_id(id: int) -> Job:
+        return Job.query.get(id)
     
     @staticmethod
-    def get(conditions) -> Result:
-        return Result.query.filter_by(**conditions).first()
+    def get(conditions) -> Job:
+        return Job.query.filter_by(**conditions).first()
 
     @staticmethod
-    def update(id: int, body) -> Result:
-        model = ResultService.get_by_id(id)
+    def update(id: int, body) -> Job:
+        model = JobService.get_by_id(id)
         if model is None:
             return None
         model.update(body)
@@ -27,7 +27,7 @@ class ResultService:
 
     @staticmethod
     def delete_by_id(id: int) -> List[int]:
-        model = Result.query.filter(Result.id == id).first()
+        model = Job.query.filter(Job.id == id).first()
         if not model:
             return []
         db.session.delete(model)
@@ -35,8 +35,8 @@ class ResultService:
         return [id]
 
     @staticmethod
-    def create(new_attrs) -> Result:
-        model = Result(**new_attrs)
+    def create(new_attrs) -> Job:
+        model = Job(**new_attrs)
 
         db.session.add(model)
         db.session.commit()
