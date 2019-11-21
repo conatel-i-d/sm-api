@@ -3,6 +3,7 @@ from flask import jsonify, Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_restplus import Resource, apidoc
 from app.api_flask import ApiFlask
+
 db = SQLAlchemy()
 
 def create_app(env=None):
@@ -35,8 +36,6 @@ def create_app(env=None):
     register_error_handlers(app)
     # Inicializamos la base de datos
     db.init_app(app)
-
-    print(app.url_map)
 
     # Configuración de página de documentación
     @api.documentation

@@ -1,16 +1,17 @@
+import os
+import sys
+import json
+import asyncio
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
+from app.errors import ApiException
 from app.api_response import ApiResponse
-#async dependencies
 from app.utils.async_action import async_action
-from app.utils.awx import awx_fetch, awx_post
 from app.switch.service import SwitchService
 from app.results.service import ResultService
-import asyncio
-import aiohttp
-import json
-import os
+from .service import NicsService, SwitchNotFound
+from app.utils.awx import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure
 
 api_description = """
 Representación de los switches de la empresa.
@@ -36,46 +37,17 @@ class InterfaceResource(Resource):
         # List jobs templates
         # '/api/v2/job_templates/'
         try:
-            switch = SwitchService.get_by_id(switch_id)
-            if (switch == None):
-                return ApiResponse({ "Error": 'Switch not found'}, 400)
-            else:
-                result = await awx_fetch('/api/v2/job_templates/')
-                templates =  result["results"]
-                template = None
-                if (os.environ.get('ENV') == 'prod'):
-                    templateList = list(filter(lambda x: x["name"] == "prod-show-interfaces-information", templates))
-                    if (len(templateList) > 0):
-                        template = templateList[0]
-                else:
-                    templateList = list(filter(lambda x: x["name"] == "test-show-interfaces-information", templates))
-                    if (len(templateList) > 0):
-                        template = templateList[0]
-                
-                if (template != None):
-                    launch_result = await awx_post('/api/v2/job_templates/' + str(template["id"]) + '/launch/',
-                    { 
-                        "limit": switch.name
-                    })
-                    job_id = launch_result["job"]
-                else:
-                    return ApiResponse({ "Error": 'The template ' + os.environ.get('ENV')  + '-show-interfaces-information not found'}, 400)
-                
-                for i in range(60):
-                    job_status_result = await awx_fetch('/api/v2/jobs/' + str(job_id) + '/')
-                    if (job_status_result["status"] == "failed"):
-                        return ApiResponse({ "Error": "Playbook execution error" }, 400)
-                    if (job_status_result["status"] == "successful"):
-                        rcv_result = ResultService.get({ "job_id": job_id })
-                        if (rcv_result != None):
-                            ResultService.delete_by_id(rcv_result.id)
-                            return ApiResponse(rcv_result.result)
-                    # elif (job_status_result["status"] != "waiting" and job_status_result["status"] != "running"):
-                    #     return ApiResponse({ "Error": "Job status unrecognized" }, 400)
-                    await asyncio.sleep(1)
-                return ApiResponse({ "Error": "Playbook execution timeout error" }, 400)
-        except Exception as e:
-            return ApiResponse({ "Error": str(e) }, 400)
+            result = await NicsService.get_by_switch_id(switch_id)
+            return ApiResponse(result)
+            #return ApiResponse(RESULT)
+        except SwitchNotFound:
+            raise ApiException(f'No se encuentra un switch con el id:{switch_id}')
+        except JobTemplateNotFound:
+            raise ApiException('No existe un playbook para obtener la infrmación de las interfaces')
+        except PlaybookTimeout:
+            raise ApiException('La ejecución de la tarea supero el tiempo del timeout')
+        except PlaybookFailure:
+            raise ApiException('Fallo la ejecución de la tarea')
 
 @api.route("/<int:switch_id>/nics/reset")
 @api.param("switch_id", "Identificador único del Switch")
@@ -83,56 +55,23 @@ class InterfaceResource(Resource):
     """
     Interface Resource
     """
-
     @async_action
     async def post(self, switch_id: int):
         """
         Devuelve la lista de Interfaces
         """
-        nic_name = request.args.get('nic_name')
-        # List jobs templates
-        # '/api/v2/job_templates/'
         try:
-            switch = SwitchService.get_by_id(switch_id)
-            if (switch == None):
-                return ApiResponse({ "Error": 'Switch not found'}, 400)
-            else:
-                result = await awx_fetch('/api/v2/job_templates/')
-                templates =  result["results"]
-                template = None
-                if (os.environ.get('ENV') == 'prod'):
-                    templateList = list(filter(lambda x: x["name"] == "prod-reset-interface", templates))
-                    if (len(templateList) > 0):
-                        template = templateList[0]
-                else:
-                    templateList = list(filter(lambda x: x["name"] == "test-reset-interface", templates))
-                    if (len(templateList) > 0):
-                        template = templateList[0]
-                
-                if (template != None):
-                    launch_result = await awx_post('/api/v2/job_templates/' + str(template["id"]) + '/launch/',
-                    { 
-                        "limit": switch.name,
-                        "extra_vars": {
-                            "interface_name": nic_name
-                        }
-                    })
-                    job_id = launch_result["job"]
-                else:
-                    return ApiResponse({ "Error": 'The template ' + os.environ.get('ENV')  + '-reset-interface not found'}, 400)
-                
-                for i in range(60):
-                    job_status_result = await awx_fetch('/api/v2/jobs/' + str(job_id) + '/')
-                    if (job_status_result["status"] == "failed"):
-                        return ApiResponse({ "Error": "Playbook execution error" }, 400)
-                    if (job_status_result["status"] == "successful"):
-                            return ApiResponse(None)
-                    # elif (job_status_result["status"] != "waiting" and job_status_result["status"] != "running"):
-                    #     return ApiResponse({ "Error": "Job status unrecognized" }, 400)
-                    await asyncio.sleep(1)
-                return ApiResponse({ "Error": "Playbook execution timeout error" }, 400)
-        except Exception as e:
-            return ApiResponse({ "Error": str(e) }, 400)
+            nic_name = request.args.get('nic_name')
+            result = await NicsService.reset_switch_nic(switch_id, nic_name)
+            return ApiResponse(result)
+        except SwitchNotFound:
+            raise ApiException(f'No se encuentra un switch con el id:{switch_id}')
+        except JobTemplateNotFound:
+            raise ApiException('No existe un playbook para obtener la infrmación de las interfaces')
+        except PlaybookTimeout:
+            raise ApiException('La ejecución de la tarea supero el tiempo del timeout')
+        except PlaybookFailure:
+            raise ApiException('Fallo la ejecución de la tarea')
 
 
 #     @api.expect(interfaces.create_model)

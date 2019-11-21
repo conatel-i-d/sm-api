@@ -11,6 +11,10 @@ class ResultService:
     @staticmethod
     def get_by_id(id: int) -> Result:
         return Result.query.get(id)
+
+    @staticmethod
+    def get_by_job_id(job_id: int) -> Result:
+        return Result.query.filter_by(job_id=job_id).first()
     
     @staticmethod
     def get(conditions) -> Result:
