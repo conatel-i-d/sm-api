@@ -1,9 +1,16 @@
 import asyncio
+import os
+from time import time
 
 from app import db
 from app.errors import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure
+from app.utils.awx import awx_fetch, awx_post
 from typing import List
 from .model import Job
+
+
+ENV = 'prod' if os.environ.get('ENV') == 'prod' else 'test'
+TIMEOUT_SECONDS = 60
 
 
 class JobService:
@@ -60,8 +67,8 @@ class JobService:
         for job_template in job_templates:
             if job_template.get('name') == job_template_name:
                 return job_template.get('id')
-    @staticmethod
-    async def run_job_template_by_name(job_template_name, body):
+    @classmethod
+    async def run_job_template_by_name(cls, job_template_name, body):
         """
         Ejecuta una tarea en el AWX, hallada según su nombre
 
@@ -70,7 +77,7 @@ class JobService:
         body (dict): Cuerpo de la tarea
         """
         print(job_template_name, flush=True)
-        job_template_id = await get_job_template_id_by_name(job_template_name)
+        job_template_id = await cls.get_job_template_id_by_name(job_template_name)
         if job_template_id is None:
             raise JobTemplateNotFound
         endpoint = f'/api/v2/job_templates/{job_template_id}/launch/'
@@ -83,7 +90,7 @@ class JobService:
             if status == 'failed':
                 raise PlaybookFailure
             elif status == 'successful':
-                result = ResultService.get_by_job_id(job_id)
+                result = cls.get_by_id(job_id)
                 if result is not None:
                     return getattr(result, 'result') 
                 return
