@@ -10,7 +10,7 @@ from app.api_response import ApiResponse
 from app.utils.async_action import async_action
 from app.switch.service import SwitchService
 from .service import NicsService, SwitchNotFound
-from app.utils.awx import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure
+from app.errors import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure
 
 api_description = """
 Representación de los switches de la empresa.

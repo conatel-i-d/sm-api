@@ -6,8 +6,7 @@ aplicación.
 """
 import asyncio
 from app.switch.service import SwitchService
-from app.utils.awx import awx_fetch, awx_post, get_job_template_id_by_name, run_job_template_by_name
-from app.results.service import ResultService
+from app.jobs.service import JobService
 
 class NicsService:
     @staticmethod
@@ -17,7 +16,7 @@ class NicsService:
             raise SwitchNotFound
         extra_vars = dict(interface_name=nic_name)
         body = dict(limit=switch.name, extra_vars=extra_vars)
-        return await run_job_template_by_name('reset-interface', body)
+        return await JobService.run_job_template_by_name('reset-interface', body)
 
 
     @staticmethod
@@ -34,9 +33,8 @@ class NicsService:
             raise SwitchNotFound
         extra_vars = dict(something='awesome')
         body = dict(limit=switch.name, extra_vars=extra_vars)
-        return await run_job_template_by_name('show-interfaces-information', body)
+        return await JobService.run_job_template_by_name('show-interfaces-information', body)
 
 
 class SwitchNotFound(Exception):
     """No existe el switch"""
-    pass

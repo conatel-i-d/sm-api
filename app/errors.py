@@ -13,3 +13,12 @@ class ApiException(HTTPException):
 
 def register_error_handlers(app):
     app.register_error_handler(ApiException, lambda err: err.to_response())
+
+class JobTemplateNotFound(Exception):
+    """No existe el job_template"""
+
+class PlaybookTimeout(Exception):
+    """La ejecución del playbook supero el tiempo del timeout"""
+
+class PlaybookFailure(Exception):
+    """Fallo la ejecución del playbook"""
