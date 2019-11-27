@@ -3,9 +3,13 @@ from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 
 from app.api_response import ApiResponse
+from app.utils.authorization import authorize 
+
 from .service import JobService
 from .model import Job
 from .interfaces import JobInterfaces
+
+
 
 api_description = """
 Representación de los Jobs de la empresa.
