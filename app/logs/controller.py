@@ -3,18 +3,16 @@ from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 
 from app.api_response import ApiResponse
-from .service import SwitchService
-from .model import Switch
-from .interfaces import SwitchInterfaces
-
-from app.utils.authorization import authorize 
+from .service import LogService
+from .model import Log
+from .interfaces import LogInterfaces
 
 api_description = """
 Representación de los switches de la empresa.
 """
 
-api = Namespace('Switch', description=api_description)
-interfaces = SwitchInterfaces(api)
+api = Namespace('Log', description=api_description)
+interfaces = LogInterfaces(api)
 
 @api.route("/")
 @api.response(400, 'Bad Request', interfaces.error_response_model)
@@ -25,36 +23,38 @@ interfaces = SwitchInterfaces(api)
     502: 'Bad Gateway',
     503: 'Service Unavailable',
 })
-class SwitchResource(Resource):
+class LogResource(Resource):
     """
-    Switch Resource
+    Log Resource
     """
-    @api.response(200, 'Lista de Switches', interfaces.many_response_model)
+
+    @api.response(200, 'Lista de Logs', interfaces.many_response_model)
     @authorize
     def get(self):
         """
-        Devuelve la lista de Switches
+        Devuelve la lista de Logs
         """
-        entities = SwitchService.get_all()
+        entities = LogService.get_all()
         return ApiResponse(interfaces.many_schema.dump(entities).data)
 
     @api.expect(interfaces.create_model)
-    @api.response(200, 'Nuevo Switch', interfaces.single_response_model)
+    @api.response(200, 'Nuevo Log', interfaces.single_response_model)
     @authorize
     def post(self):
         """
-        Crea un nuevo Switch.
+        Crea un nuevo Log.
         """
         json_data = request.get_json()
+        print(json_data, flush=True)
         if json_data is None:
             raise Exception('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
-        Switch = SwitchService.create(body)
-        return ApiResponse(interfaces.single_schema.dump(Switch).data)
+        Log = LogService.create(body)
+        return ApiResponse(interfaces.single_schema.dump(Log).data)
 
 
 @api.route("/<int:id>")
-@api.param("id", "Identificador único del Switch")
+@api.param("id", "Identificador único del Log")
 @api.response(400, 'Bad Request', interfaces.error_response_model)
 @api.doc(responses={
     401: 'Unauthorized',
@@ -63,34 +63,34 @@ class SwitchResource(Resource):
     502: 'Bad Gateway',
     503: 'Service Unavailable',
 })
-class SwitchIdResource(Resource):
-    @api.response(200, 'Switch', interfaces.single_response_model)
+class LogIdResource(Resource):
+    @api.response(200, 'Log', interfaces.single_response_model)
     @authorize
     def get(self, id: int):
         """
-        Obtiene un único Switch por ID.
+        Obtiene un único Log por ID.
         """
-        Switch = SwitchService.get_by_id(id)
-        return ApiResponse(interfaces.single_schema.dump(Switch).data)
+        Log = LogService.get_by_id(id)
+        return ApiResponse(interfaces.single_schema.dump(Log).data)
 
     @api.response(204, 'No Content')
     @authorize
     def delete(self, id: int) -> Response:
         """
-        Elimina un único Switch por ID.
+        Elimina un único Log por ID.
         """
         from flask import jsonify
 
-        id = SwitchService.delete_by_id(id)
+        id = LogService.delete_by_id(id)
         return ApiResponse(None, 204)
 
     @api.expect(interfaces.update_model)
-    @api.response(200, 'Switch Actualizado', interfaces.single_response_model)
+    @api.response(200, 'Log Actualizado', interfaces.single_response_model)
     @authorize
     def put(self, id: int):
         """
-        Actualiza un único Switch por ID.
+        Actualiza un único Log por ID.
         """
         body = interfaces.single_schema.load(request.json).data
-        Switch = SwitchService.update(id, body)
-        return ApiResponse(interfaces.single_schema.dump(Switch).data)
+        Log = LogService.update(id, body)
+        return ApiResponse(interfaces.single_schema.dump(Log).data)

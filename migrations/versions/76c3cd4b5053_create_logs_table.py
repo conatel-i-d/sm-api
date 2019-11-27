@@ -20,10 +20,11 @@ def upgrade():
     op.create_table(
         'logs',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('event_type', sa.String(30), nullable=False, unique=True),
+        sa.Column('event_type', sa.String(30), nullable=False),
+        sa.Column('event_result', sa.String(30), nullable=False),
         sa.Column('entity', sa.String(30), nullable=False),
-        sa.Column('payload', sa.JSON),
-        sa.Column('user_id', sa.String(255), nullable=False, unique=True),
+        sa.Column('payload', sa.String(500), nullable=True),
+        sa.Column('user_id', sa.String(255), nullable=False),
         sa.Column('date', sa.DateTime, nullable=False)
     )
 
