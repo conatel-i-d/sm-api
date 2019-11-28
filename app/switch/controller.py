@@ -46,6 +46,7 @@ class SwitchResource(Resource):
         Crea un nuevo Switch.
         """
         json_data = request.get_json()
+        print(json_data, flush=True)
         if json_data is None:
             raise Exception('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data

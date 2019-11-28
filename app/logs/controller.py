@@ -7,6 +7,8 @@ from .service import LogService
 from .model import Log
 from .interfaces import LogInterfaces
 
+from app.utils.authorization import authorize
+
 api_description = """
 Representación de los switches de la empresa.
 """
@@ -29,6 +31,7 @@ class LogResource(Resource):
     """
 
     @api.response(200, 'Lista de Logs', interfaces.many_response_model)
+    @authorize
     def get(self):
         """
         Devuelve la lista de Logs
@@ -38,12 +41,12 @@ class LogResource(Resource):
 
     @api.expect(interfaces.create_model)
     @api.response(200, 'Nuevo Log', interfaces.single_response_model)
+    @authorize
     def post(self):
         """
         Crea un nuevo Log.
         """
         json_data = request.get_json()
-        print(json_data, flush=True)
         if json_data is None:
             raise Exception('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
@@ -63,6 +66,7 @@ class LogResource(Resource):
 })
 class LogIdResource(Resource):
     @api.response(200, 'Log', interfaces.single_response_model)
+    @authorize
     def get(self, id: int):
         """
         Obtiene un único Log por ID.
@@ -71,6 +75,7 @@ class LogIdResource(Resource):
         return ApiResponse(interfaces.single_schema.dump(Log).data)
 
     @api.response(204, 'No Content')
+    @authorize
     def delete(self, id: int) -> Response:
         """
         Elimina un único Log por ID.
@@ -82,6 +87,7 @@ class LogIdResource(Resource):
 
     @api.expect(interfaces.update_model)
     @api.response(200, 'Log Actualizado', interfaces.single_response_model)
+    @authorize
     def put(self, id: int):
         """
         Actualiza un único Log por ID.
