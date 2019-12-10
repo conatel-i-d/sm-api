@@ -3,6 +3,7 @@ from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 
 from app.api_response import ApiResponse
+from app.errors import ApiException
 from .service import SwitchService
 from .model import Switch
 from .interfaces import SwitchInterfaces
@@ -48,7 +49,7 @@ class SwitchResource(Resource):
         json_data = request.get_json()
         print(json_data, flush=True)
         if json_data is None:
-            raise Exception('JSON body is undefined')
+            raise ApiException('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
         Switch = SwitchService.create(body)
         return ApiResponse(interfaces.single_schema.dump(Switch).data)

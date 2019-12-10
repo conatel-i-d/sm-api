@@ -4,6 +4,7 @@ from flask.wrappers import Response
 
 from app.api_response import ApiResponse
 from app.utils.authorization import authorize 
+from app.errors import ApiException
 
 from .service import JobService
 from .model import Job
@@ -50,7 +51,7 @@ class JobResource(Resource):
         """
         json_data = request.get_json()
         if json_data is None:
-            raise Exception('JSON body is undefined')
+            raise ApiException('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
         Job = JobService.create(body)
         return ApiResponse(interfaces.single_schema.dump(Job).data)

@@ -3,6 +3,7 @@ from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 
 from app.api_response import ApiResponse
+from app.errors import ApiException
 from .service import LogService
 from .model import Log
 from .interfaces import LogInterfaces
@@ -48,7 +49,7 @@ class LogResource(Resource):
         """
         json_data = request.get_json()
         if json_data is None:
-            raise Exception('JSON body is undefined')
+            raise ApiException('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
         Log = LogService.create(body)
         return ApiResponse(interfaces.single_schema.dump(Log).data)
@@ -80,8 +81,6 @@ class LogIdResource(Resource):
         """
         Elimina un único Log por ID.
         """
-        from flask import jsonify
-
         id = LogService.delete_by_id(id)
         return ApiResponse(None, 204)
 
