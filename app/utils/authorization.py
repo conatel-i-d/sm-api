@@ -1,9 +1,21 @@
-from jose import jwt
-from jose.exceptions import JWTError, ExpiredSignatureError, JWTClaimsError
-from functools import wraps
-from app.api_response import ApiResponse
+import os
+import json
 
-PUBLIC_KEY = os.environ.get('PUBLIC_KEY')
+from jose import jwt
+from jose.exceptions import JWTError, ExpiredSignatureError, JWTClaimsError, JWKError
+from functools import wraps
+from flask import request
+from app.api_response import ApiResponse
+from app.errors import ApiResponse
+
+
+
+PUBLIC_KEY = f"""
+-----BEGIN PUBLIC KEY----- 
+{os.environ.get('PUBLIC_KEY')}
+-----END PUBLIC KEY-----
+"""
+
 
 
 def authorize(func):
@@ -13,12 +25,14 @@ def authorize(func):
         if not token:
             return ApiResponse({"Error": "Token not found"}, 400)
         try:
-            jwt.decode(token, public_key=PUBLIC_KEY, audience='account')
+            jwt.decode(token, PUBLIC_KEY, algorithms=['RS256'], audience='dashboard')
         except JWTError as error:
-            return ApiResponse({"Error": error}, 400)
+            raise ApiException(error)
         except JWTClaimsError as error:
-            return ApiResponse({"Error": error}, 400)
+            raise ApiException(error)
         except ExpiredSignatureError as error:
-            return ApiResponse({"Error": error}, 400)
+            raise ApiException(error)
+        except JWKError as error:
+            raise ApiException(error)
         return func(*args, **kwargs)
     return authorize_handler

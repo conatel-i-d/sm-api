@@ -2,15 +2,19 @@ import os
 import sys
 import json
 import asyncio
+
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
-from app.errors import ApiException
+
 from app.api_response import ApiResponse
 from app.utils.async_action import async_action
+from app.utils.authorization import authorize
+
 from app.switch.service import SwitchService
 from .service import NicsService, SwitchNotFound
-from app.errors import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure
+
+from app.errors import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure, ApiException
 
 api_description = """
 Representación de los switches de la empresa.
@@ -29,6 +33,7 @@ class InterfaceResource(Resource):
     # @api.response(200, 'Lista de Interfaces', interfaces.many_response_model)
 
     @async_action
+    @authorize
     async def get(self, switch_id: int):
         """
         Devuelve la lista de Interfaces
@@ -55,6 +60,7 @@ class InterfaceResource(Resource):
     Interface Resource
     """
     @async_action
+    @authorize
     async def post(self, switch_id: int):
         """
         Devuelve la lista de Interfaces

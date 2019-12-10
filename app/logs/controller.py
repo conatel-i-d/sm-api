@@ -3,21 +3,19 @@ from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 
 from app.api_response import ApiResponse
-from app.utils.authorization import authorize 
 from app.errors import ApiException
+from .service import LogService
+from .model import Log
+from .interfaces import LogInterfaces
 
-from .service import JobService
-from .model import Job
-from .interfaces import JobInterfaces
-
-
+from app.utils.authorization import authorize
 
 api_description = """
-Representación de los Jobs de la empresa.
+Representación de los switches de la empresa.
 """
 
-api = Namespace('Jobs', description=api_description)
-interfaces = JobInterfaces(api)
+api = Namespace('Log', description=api_description)
+interfaces = LogInterfaces(api)
 
 @api.route("/")
 @api.response(400, 'Bad Request', interfaces.error_response_model)
@@ -28,37 +26,37 @@ interfaces = JobInterfaces(api)
     502: 'Bad Gateway',
     503: 'Service Unavailable',
 })
-class JobResource(Resource):
+class LogResource(Resource):
     """
-    Jobs Resource
+    Log Resource
     """
 
-    @api.response(200, 'Lista de Jobs', interfaces.many_response_model)
+    @api.response(200, 'Lista de Logs', interfaces.many_response_model)
     @authorize
     def get(self):
         """
-        Devuelve la lista de Jobs
+        Devuelve la lista de Logs
         """
-        entities = JobService.get_all()
+        entities = LogService.get_all()
         return ApiResponse(interfaces.many_schema.dump(entities).data)
 
     @api.expect(interfaces.create_model)
-    @api.response(200, 'Nuevo Job', interfaces.single_response_model)
+    @api.response(200, 'Nuevo Log', interfaces.single_response_model)
     @authorize
     def post(self):
         """
-        Crea un nuevo Job.
+        Crea un nuevo Log.
         """
         json_data = request.get_json()
         if json_data is None:
             raise ApiException('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
-        Job = JobService.create(body)
-        return ApiResponse(interfaces.single_schema.dump(Job).data)
+        Log = LogService.create(body)
+        return ApiResponse(interfaces.single_schema.dump(Log).data)
 
 
 @api.route("/<int:id>")
-@api.param("id", "Identificador único del Job")
+@api.param("id", "Identificador único del Log")
 @api.response(400, 'Bad Request', interfaces.error_response_model)
 @api.doc(responses={
     401: 'Unauthorized',
@@ -67,34 +65,32 @@ class JobResource(Resource):
     502: 'Bad Gateway',
     503: 'Service Unavailable',
 })
-class JobIdResource(Resource):
-    @api.response(200, 'Job', interfaces.single_response_model)
+class LogIdResource(Resource):
+    @api.response(200, 'Log', interfaces.single_response_model)
     @authorize
     def get(self, id: int):
         """
-        Obtiene un único Job por ID.
+        Obtiene un único Log por ID.
         """
-        Job = JobService.get_by_id(id)
-        return ApiResponse(interfaces.single_schema.dump(Job).data)
+        Log = LogService.get_by_id(id)
+        return ApiResponse(interfaces.single_schema.dump(Log).data)
 
     @api.response(204, 'No Content')
     @authorize
     def delete(self, id: int) -> Response:
         """
-        Elimina un único Job por ID.
+        Elimina un único Log por ID.
         """
-        from flask import jsonify
-
-        id = JobService.delete_by_id(id)
+        id = LogService.delete_by_id(id)
         return ApiResponse(None, 204)
 
     @api.expect(interfaces.update_model)
-    @api.response(200, 'Job Actualizado', interfaces.single_response_model)
+    @api.response(200, 'Log Actualizado', interfaces.single_response_model)
     @authorize
     def put(self, id: int):
         """
-        Actualiza un único Job por ID.
+        Actualiza un único Log por ID.
         """
         body = interfaces.single_schema.load(request.json).data
-        Job = JobService.update(id, body)
-        return ApiResponse(interfaces.single_schema.dump(Job).data)
+        Log = LogService.update(id, body)
+        return ApiResponse(interfaces.single_schema.dump(Log).data)

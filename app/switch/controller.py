@@ -3,9 +3,12 @@ from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 
 from app.api_response import ApiResponse
+from app.errors import ApiException
 from .service import SwitchService
 from .model import Switch
 from .interfaces import SwitchInterfaces
+
+from app.utils.authorization import authorize 
 
 api_description = """
 Representación de los switches de la empresa.
@@ -27,8 +30,8 @@ class SwitchResource(Resource):
     """
     Switch Resource
     """
-
     @api.response(200, 'Lista de Switches', interfaces.many_response_model)
+    @authorize
     def get(self):
         """
         Devuelve la lista de Switches
@@ -38,13 +41,15 @@ class SwitchResource(Resource):
 
     @api.expect(interfaces.create_model)
     @api.response(200, 'Nuevo Switch', interfaces.single_response_model)
+    @authorize
     def post(self):
         """
         Crea un nuevo Switch.
         """
         json_data = request.get_json()
+        print(json_data, flush=True)
         if json_data is None:
-            raise Exception('JSON body is undefined')
+            raise ApiException('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
         Switch = SwitchService.create(body)
         return ApiResponse(interfaces.single_schema.dump(Switch).data)
@@ -62,6 +67,7 @@ class SwitchResource(Resource):
 })
 class SwitchIdResource(Resource):
     @api.response(200, 'Switch', interfaces.single_response_model)
+    @authorize
     def get(self, id: int):
         """
         Obtiene un único Switch por ID.
@@ -70,6 +76,7 @@ class SwitchIdResource(Resource):
         return ApiResponse(interfaces.single_schema.dump(Switch).data)
 
     @api.response(204, 'No Content')
+    @authorize
     def delete(self, id: int) -> Response:
         """
         Elimina un único Switch por ID.
@@ -81,6 +88,7 @@ class SwitchIdResource(Resource):
 
     @api.expect(interfaces.update_model)
     @api.response(200, 'Switch Actualizado', interfaces.single_response_model)
+    @authorize
     def put(self, id: int):
         """
         Actualiza un único Switch por ID.

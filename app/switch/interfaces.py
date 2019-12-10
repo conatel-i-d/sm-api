@@ -1,4 +1,4 @@
-from app.utils.base_interfaces_test import BaseInterfaces, marshmallow_fields, restplus_fields
+from app.utils.base_interfaces import BaseInterfaces, marshmallow_fields, restplus_fields
 
 class SwitchInterfaces(BaseInterfaces):
     __name__ = 'Switch'
