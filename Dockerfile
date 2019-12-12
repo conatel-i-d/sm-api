@@ -12,23 +12,23 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN pip3 install uwsgi psycopg2
 
+WORKDIR /usr/src/app
+COPY requirements.txt ./
+RUN pip3 install --no-cache-dir -r requirements.txt
+
 RUN useradd --no-create-home nginx
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -r /root/.cache
+
 
 COPY nginx.conf /etc/nginx
 COPY flask-nginx.conf /etc/nginx/conf.d/
 COPY uwsgi.ini /etc/uwsgi/
 COPY supervisord.conf /ect/
 
-WORKDIR /usr/src/app
 
-COPY requirements.txt ./
-RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
-
-RUN celery -A app.celery worker --loglevel=info
 
 CMD ["/usr/bin/supervisord"]
 
