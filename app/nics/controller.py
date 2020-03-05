@@ -47,7 +47,7 @@ class InterfaceResource(Resource):
         except SwitchNotFound:
             raise ApiException(f'No se encuentra un switch con el id:{switch_id}')
         except JobTemplateNotFound:
-            raise ApiException('No existe un playbook para obtener la infrmación de las interfaces')
+            raise ApiException('No existe un playbook para obtener la información de las interfaces')
         except PlaybookTimeout:
             raise ApiException('La ejecución de la tarea supero el tiempo del timeout')
         except PlaybookFailure:
