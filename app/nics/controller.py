@@ -31,7 +31,6 @@ class InterfaceResource(Resource):
 
 
     # @api.response(200, 'Lista de Interfaces', interfaces.many_response_model)
-
     @async_action
     @authorize
     async def get(self, switch_id: int):

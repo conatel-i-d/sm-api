@@ -2,8 +2,7 @@ from flask import request
 from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 
-from app.api_response import ApiResponse
-from app.utils.authorization import authorize 
+from app.api_response import ApiResponse 
 from app.errors import ApiException
 
 from .service import JobService
@@ -34,7 +33,6 @@ class JobResource(Resource):
     """
 
     @api.response(200, 'Lista de Jobs', interfaces.many_response_model)
-    @authorize
     def get(self):
         """
         Devuelve la lista de Jobs
@@ -44,7 +42,6 @@ class JobResource(Resource):
 
     @api.expect(interfaces.create_model)
     @api.response(200, 'Nuevo Job', interfaces.single_response_model)
-    @authorize
     def post(self):
         """
         Crea un nuevo Job.
@@ -69,7 +66,6 @@ class JobResource(Resource):
 })
 class JobIdResource(Resource):
     @api.response(200, 'Job', interfaces.single_response_model)
-    @authorize
     def get(self, id: int):
         """
         Obtiene un único Job por ID.
@@ -78,7 +74,6 @@ class JobIdResource(Resource):
         return ApiResponse(interfaces.single_schema.dump(Job).data)
 
     @api.response(204, 'No Content')
-    @authorize
     def delete(self, id: int) -> Response:
         """
         Elimina un único Job por ID.
@@ -90,7 +85,6 @@ class JobIdResource(Resource):
 
     @api.expect(interfaces.update_model)
     @api.response(200, 'Job Actualizado', interfaces.single_response_model)
-    @authorize
     def put(self, id: int):
         """
         Actualiza un único Job por ID.
