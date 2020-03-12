@@ -62,7 +62,7 @@ class InterfaceResource(Resource):
     @authorize
     async def post(self, switch_id: int):
         """
-        Devuelve la lista de Interfaces
+        Resetea la interface indicada
         """
         try:
             nic_name = request.args.get('nic_name')
