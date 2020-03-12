@@ -4,9 +4,9 @@ import json
 from jose import jwt
 from jose.exceptions import JWTError, ExpiredSignatureError, JWTClaimsError, JWKError
 from functools import wraps
-from flask import request
+from flask import request, redirect
 from app.api_response import ApiResponse
-from app.errors import ApiResponse
+from app.errors import ApiException
 
 
 
@@ -15,8 +15,6 @@ PUBLIC_KEY = f"""
 {os.environ.get('PUBLIC_KEY')}
 -----END PUBLIC KEY-----
 """
-
-
 
 def authorize(func):
     @wraps(func)

@@ -33,7 +33,8 @@ class NicsService:
             raise SwitchNotFound
         extra_vars = dict(something='awesome')
         body = dict(limit=switch.name, extra_vars=extra_vars)
-        return await JobService.run_job_template_by_name('show-interfaces-information', body)
+        result = await JobService.run_job_template_by_name('show-interfaces-information', body)
+        return result
 
 
 class SwitchNotFound(Exception):

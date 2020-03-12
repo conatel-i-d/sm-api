@@ -31,7 +31,6 @@ class InterfaceResource(Resource):
 
 
     # @api.response(200, 'Lista de Interfaces', interfaces.many_response_model)
-
     @async_action
     @authorize
     async def get(self, switch_id: int):
@@ -47,7 +46,7 @@ class InterfaceResource(Resource):
         except SwitchNotFound:
             raise ApiException(f'No se encuentra un switch con el id:{switch_id}')
         except JobTemplateNotFound:
-            raise ApiException('No existe un playbook para obtener la infrmación de las interfaces')
+            raise ApiException('No existe un playbook para obtener la información de las interfaces')
         except PlaybookTimeout:
             raise ApiException('La ejecución de la tarea supero el tiempo del timeout')
         except PlaybookFailure:
@@ -63,7 +62,7 @@ class InterfaceResource(Resource):
     @authorize
     async def post(self, switch_id: int):
         """
-        Devuelve la lista de Interfaces
+        Resetea la interface indicada
         """
         try:
             nic_name = request.args.get('nic_name')
