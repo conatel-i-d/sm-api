@@ -28,7 +28,7 @@ class NicsService:
         Args:
         switch_id (int): Identidad del switch
         """
-        switch = SwitchService.get_by_id(switch_id)
+        switch = await SwitchService.get_by_id(switch_id)
         if switch == None:
             raise SwitchNotFound
         extra_vars = dict(something='awesome')
