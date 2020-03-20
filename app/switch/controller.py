@@ -125,20 +125,9 @@ class SwitchInventoryResource(Resource):
             { 
                 "ansible_host": x.ip, 
             }}, entities)
-        inventory = {
-            "all": {
-                "vars": {
-                    "ansible_become": True,
-                    "ansible_become_method": "enable",
-                    "ansible_connection": "network_cli",
-                    "ansible_port": 22
-                },
-                "hosts": list(ansible_switches)
-            }
-        }
         sw_inv = {
             'group': {
-                'hosts': list(ansible_switches),
+                'hosts': ["192.168.1.12","192.168.1.18"],
                 'vars': {
                     "ansible_become": True,
                     "ansible_become_method": "enable",
@@ -151,4 +140,4 @@ class SwitchInventoryResource(Resource):
             }
         }
 
-        return ApiResponse(inventory)
+        return ApiResponse(sw_inv)
