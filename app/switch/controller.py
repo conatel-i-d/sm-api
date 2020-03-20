@@ -128,8 +128,8 @@ class SwitchInventoryResource(Resource):
                 "ansible_become_method": "enable",
                 "ansible_connection": "network_cli",
                 "ansible_port": 22,
-                "ansible_user": os.getenv("ansible_swtches_user"),
-                "ansible_ssh_pass": os.getenv("ansible_swtches_ssh_pass")   
+                "ansible_user": os.getenv("ANSIBLE_SWITCHES_USER"),
+                "ansible_ssh_pass": os.getenv("ANSIBLE_SWITCHES_SSH_PASS")   
             }}, entities)
         inventory = {
             "all": {
