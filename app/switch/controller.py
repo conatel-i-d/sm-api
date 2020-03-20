@@ -124,8 +124,6 @@ class SwitchInventoryResource(Resource):
         ansible_switches = map(lambda x : { x.name: 
             { 
                 "ansible_host": x.ip, 
-                "ansible_user": os.getenv("ANSIBLE_SWITCHES_USER"),
-                "ansible_ssh_pass": os.getenv("ANSIBLE_SWITCHES_SSH_PASS")   
             }}, entities)
         inventory = {
             "all": {
@@ -138,4 +136,19 @@ class SwitchInventoryResource(Resource):
                 "hosts": list(ansible_switches)
             }
         }
+        sw_inv = {
+            'group': {
+                'hosts': list(ansible_switches),
+                'vars': {
+                    "ansible_become": True,
+                    "ansible_become_method": "enable",
+                    "ansible_connection": "network_cli",
+                    "ansible_port": 22
+                }
+            },
+            '_meta': {
+                'hostvars': { }
+            }
+        }
+
         return ApiResponse(inventory)
