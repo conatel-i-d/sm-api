@@ -121,13 +121,13 @@ class SwitchInventoryResource(Resource):
         Devuelve la lista de Switches
         """
         entities = await SwitchService.get_all()
-        ansible_switches = map(lambda x : { x.name: 
-            { 
-                "ansible_host": x.ip, 
-            }}, entities)
+        ansible_switches_vars = {}
+        for x  in entities:
+            ansible_switches_vars[x.name] = { "ansible_host": x.ip }
+        ansible_switches_hostnames = map(lambda x : x.name, entities)
         sw_inv = {
             'group': {
-                'hosts': ["192.168.1.12","192.168.1.18"],
+                'hosts': list(ansible_switches_hostnames),
                 'vars': {
                     "ansible_become": True,
                     "ansible_become_method": "enable",
@@ -136,7 +136,7 @@ class SwitchInventoryResource(Resource):
                 }
             },
             '_meta': {
-                'hostvars': { }
+                'hostvars': ansible_switches_vars
             }
         }
 
