@@ -37,7 +37,7 @@ class SwitchService:
         if found_in_db is None:
             prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
             switches = prime_data['queryResponse']['entity']
-            swtich = filter(lambda x: x["devicesDTO"]["deviceId"] == id, switches)
+            swtich = list(filter(lambda x: x["devicesDTO"]["deviceId"] == id, switches))
             if len(swtich) > 0:
                 return swtich[0]
             return None
