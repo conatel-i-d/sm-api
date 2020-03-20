@@ -135,7 +135,7 @@ class SwitchInventoryResource(Resource):
                 "vars": {
 
                 },
-                "hosts": ansible_switches
+                "hosts": list(ansible_switches)
             }
         }
         return ApiResponse(inventory)
