@@ -120,9 +120,9 @@ class SwitchInventoryResource(Resource):
         Devuelve la lista de Switches
         """
         entities = await SwitchService.get_all()
-        ansible_switches = map(lambda x : { [entities.name]: 
+        ansible_switches = map(lambda x : { [x.name]: 
             { 
-                "ansible_host": entities.ip, 
+                "ansible_host": x.ip, 
                 "ansible_become": True,
                 "ansible_become_method": "enable",
                 "ansible_connection": "network_cli",
