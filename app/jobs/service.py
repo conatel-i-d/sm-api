@@ -11,7 +11,7 @@ from .model import Job
 
 
 ENV = 'prod' if os.environ.get('ENV') == 'prod' else 'test'
-TIMEOUT_SECONDS = 60
+TIMEOUT_SECONDS = 120
 
 
 class JobService:
