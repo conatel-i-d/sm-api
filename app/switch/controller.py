@@ -134,9 +134,8 @@ class SwitchInventoryResource(Resource):
         inventory = {
             "all": {
                 "vars": {
-
-                },
-                "hosts": list(ansible_switches)
-            }
+                }
+            }            
         }
+        inventory["all"]["hosts"] = list(ansible_switches)
         return ApiResponse(inventory)
