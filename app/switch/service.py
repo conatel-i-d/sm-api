@@ -39,7 +39,14 @@ class SwitchService:
             switches = prime_data['queryResponse']['entity']
             swtich = list(filter(lambda x: x["devicesDTO"]["deviceId"] == id, switches))
             if len(swtich) > 0:
-                return swtich[0]
+                switch_data = swtich[0]["devicesDTO"]
+                return Switch(
+                        id=switch_data["deviceId"],
+                        name=switch_data["deviceName"],
+                        description="software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
+                        model=switch_data["deviceType"], 
+                        ip=switch_data["ipAddress"]
+                    )
             return None
         return found_in_db
     @staticmethod
