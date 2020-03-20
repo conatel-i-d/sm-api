@@ -33,6 +33,7 @@ class SwitchResource(Resource):
     """
     @async_action
     @api.response(200, 'Lista de Switches', interfaces.many_response_model)
+    @authorize
     async def get(self):
         """
         Devuelve la lista de Switches
@@ -98,3 +99,43 @@ class SwitchIdResource(Resource):
         body = interfaces.single_schema.load(request.json).data
         Switch = SwitchService.update(id, body)
         return ApiResponse(interfaces.single_schema.dump(Switch).data)
+
+@api.route("/inventory")
+@api.response(400, 'Bad Request', interfaces.error_response_model)
+@api.doc(responses={
+    401: 'Unauthorized',
+    403: 'Forbidden',
+    500: 'Internal server error',
+    502: 'Bad Gateway',
+    503: 'Service Unavailable',
+})
+class SwitchInventoryResource(Resource):
+    """
+    Inventory switch Resource
+    """
+    @async_action
+    @api.response(200, 'Inventario con lista de swithces')
+    async def get(self):
+        """
+        Devuelve la lista de Switches
+        """
+        entities = await SwitchService.get_all()
+        switches = map(lambda x : { [entities.name]: 
+            { 
+                "ansible_host": entities.ip, 
+                "ansible_become": True,
+                "ansible_become_method": "enable",
+                "ansible_connection": "network_cli",
+                "ansible_port": 22,
+                "ansible_user": os.getenv("ansible_swtches_user"),
+                "ansible_ssh_pass": os.getenv("ansible_swtches_ssh_pass")   
+                }}, entities)
+        {
+            "all": {
+                "vars": {
+
+                },
+                "hosts": switches
+            }
+        }
+        return ApiResponse(interfaces.many_schema.dump(entities).data)
