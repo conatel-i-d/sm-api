@@ -33,7 +33,6 @@ class SwitchResource(Resource):
     """
     @async_action
     @api.response(200, 'Lista de Switches', interfaces.many_response_model)
-    @authorize
     async def get(self):
         """
         Devuelve la lista de Switches

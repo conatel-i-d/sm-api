@@ -4,6 +4,7 @@ from .model import Switch
 import base64
 import os
 import json
+import sys
 
 from app.utils.prime import prime_fetch
 
@@ -25,8 +26,8 @@ class SwitchService:
                         ip=switch_data["ipAddress"]
                     )
                 )
-        except:
-            print("Can't connect with prime to list switches")
+        except Exception as err:
+            print("Can't connect with prime to list switches, error: ", err, file=sys.stderr)
         switches_from_db = Switch.query.all()
         return switches_from_db + switches_from_prime
     
