@@ -123,17 +123,19 @@ class SwitchInventoryResource(Resource):
         entities = await SwitchService.get_all()
         ansible_switches_vars = {}
         for x  in entities:
-            ansible_switches_vars[x.name] = { "ansible_host": x.ip }
+            ansible_switches_vars[x.name] = { 
+                "ansible_host": x.ip,
+                "ansible_become": True,
+                "ansible_become_method": "enable",
+                "ansible_connection": "network_cli",
+                "ansible_port": 22,
+                "ansible_user": os.getenv("ANSIBLE_SWITCHES_USER"),
+                "ansible_ssh_pass": os.getenv("ANSIBLE_SWITCHES_SSH_PASS")
+            }
         ansible_switches_hostnames = map(lambda x : x.name, entities)
         sw_inv = {
             'group': {
                 'hosts': list(ansible_switches_hostnames),
-                'vars': {
-                    "ansible_become": True,
-                    "ansible_become_method": "enable",
-                    "ansible_connection": "network_cli",
-                    "ansible_port": 22
-                }
             },
             '_meta': {
                 'hostvars': ansible_switches_vars
