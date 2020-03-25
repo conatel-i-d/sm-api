@@ -130,8 +130,8 @@ class SwitchInventoryResource(Resource):
                 "ansible_connection": "network_cli",
                 "ansible_network_os": "ios",
                 "ansible_port": 22,
-                "ansible_user": os.getenv("ANSIBLE_SWITCHES_USER"),
-                "ansible_ssh_pass": os.getenv("ANSIBLE_SWITCHES_SSH_PASS")
+                "ansible_user": x.ansible_user,
+                "ansible_ssh_pass": x.ansible_ssh_pass
             }
         ansible_switches_hostnames = map(lambda x : x.name, entities)
         sw_inv = {

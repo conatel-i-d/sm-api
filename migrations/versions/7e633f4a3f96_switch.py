@@ -24,6 +24,8 @@ def upgrade():
         sa.Column('ip', sa.String(15), nullable=False),
         sa.Column('description', sa.String(255), nullable=True),
         sa.Column('model', sa.String(255), nullable=True),
+        sa.Column('ansible_user', sa.String(255), nullable=True),
+        sa.Column('ansible_ssh_pass', sa.String(255), nullable=True),
     )
 
 
