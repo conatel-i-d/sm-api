@@ -1,4 +1,4 @@
-import os
+import os, sys
 from flask import request
 from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
@@ -50,7 +50,6 @@ class SwitchResource(Resource):
         Crea un nuevo Switch.
         """
         json_data = request.get_json()
-        print(json_data, flush=True)
         if json_data is None:
             raise ApiException('JSON body is undefined')
         body = interfaces.single_schema.load(json_data).data
@@ -76,8 +75,8 @@ class SwitchIdResource(Resource):
         """
         Obtiene un único Switch por ID.
         """
-        Switch = await SwitchService.get_by_id(id)
-        return ApiResponse(interfaces.single_schema.dump(Switch).data)
+        switch = await SwitchService.get_by_id(id)
+        return ApiResponse(interfaces.single_schema.dump(switch).data)
 
     @api.response(204, 'No Content')
     @authorize
@@ -120,6 +119,7 @@ class SwitchInventoryResource(Resource):
         """
         Devuelve la lista de Switches
         """
+
         entities = await SwitchService.get_all()
         ansible_switches_vars = {}
         for x  in entities:
@@ -129,9 +129,9 @@ class SwitchInventoryResource(Resource):
                 "ansible_become_method": "enable",
                 "ansible_connection": "network_cli",
                 "ansible_network_os": "ios",
-                "ansible_port": 22,
-                "ansible_user": x.ansible_user,
-                "ansible_ssh_pass": x.ansible_ssh_pass
+                "ansible_port": x.ansible_ssh_port or 22,
+                "ansible_user": x.ansible_user or os.getenv("PRIME_SWITCHES_SSH_USER"),
+                "ansible_ssh_pass": x.ansible_ssh_pass or os.getenv("PRIME_SWITCHES_SSH_PASS")
             }
         ansible_switches_hostnames = map(lambda x : x.name, entities)
         sw_inv = {
