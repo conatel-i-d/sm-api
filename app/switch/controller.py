@@ -11,6 +11,7 @@ from .model import Switch
 from .interfaces import SwitchInterfaces
 
 from app.utils.authorization import authorize 
+from app.utils.b64 import decode
 
 api_description = """
 Representación de los switches de la empresa.
@@ -56,6 +57,19 @@ class SwitchResource(Resource):
         Switch = SwitchService.create(body)
         return ApiResponse(interfaces.single_schema.dump(Switch).data)
 
+    @api.expect(interfaces.update_model)
+    @api.response(200, 'Switches Actualizados', interfaces.many_response_model)
+    @authorize
+    def put(self, id: int):
+        """
+        Actualiza un batch de Switches por su ID.
+        """
+        json_data = request.get_json()
+        sw_updated = []
+        for item in json_data:
+            sw = interfaces.single_schema.load(request.json).data
+            sw_updated.append(SwitchService.update(id, sw))
+        return ApiResponse(interfaces.many_schema.dump(sw_updated).data)
 
 @api.route("/<int:id>")
 @api.param("id", "Identificador único del Switch")
@@ -130,8 +144,8 @@ class SwitchInventoryResource(Resource):
                 "ansible_connection": "network_cli",
                 "ansible_network_os": "ios",
                 "ansible_port": x.ansible_ssh_port or 22,
-                "ansible_user": x.ansible_user or os.getenv("PRIME_SWITCHES_SSH_USER"),
-                "ansible_ssh_pass": x.ansible_ssh_pass or os.getenv("PRIME_SWITCHES_SSH_PASS")
+                "ansible_user": decode(x.ansible_user),
+                "ansible_ssh_pass": decode(x.ansible_ssh_pass)
             }
         ansible_switches_hostnames = map(lambda x : x.name, entities)
         sw_inv = {

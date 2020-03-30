@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, Column, String
+from sqlalchemy import Integer, Column, String, Boolean
 from app import db  # noqa
 
 
@@ -15,6 +15,7 @@ class Switch(db.Model):  # type: ignore
     ansible_user = Column(String(255))
     ansible_ssh_pass = Column(String(255))
     ansible_ssh_port = Column(Integer)
+    is_visible = Column(Boolean)
     def update(self, changes):
         for key, val in changes.items():
             setattr(self, key, val)

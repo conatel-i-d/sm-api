@@ -1,72 +1,66 @@
 from app import db
 from typing import List
 from .model import Switch
-import base64
+from app.utils.b64 import encode
+
 import os
 import json
 import sys
-from app.utils.b64 import encode, decode
 from app.utils.prime import prime_fetch
 import copy
+import pathlib
+
 class SwitchService:
     @staticmethod
     async def get_all() -> List[Switch]:
         switches_from_prime = []
+        ids_sw_in_db =  map(lambda x: x[0], db.session.query(Switch.id).all())
+        print(ids_sw_in_db,file=sys.stderr)
         try:
-            prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
+            # prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
+            with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
+                prime_data = json.load(json_file)
             switches = prime_data['queryResponse']['entity']
             for switch in switches:
                 switch_data = switch["devicesDTO"]
-                switches_from_prime.append(
-                    Switch(
-                        id=switch_data["deviceId"],
-                        name=switch_data["deviceName"],
-                        description="software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
-                        model=switch_data["deviceType"], 
-                        ip=switch_data["ipAddress"],
-                        )
-                )
+                if not (switch_data["deviceId"] in ids_sw_in_db):
+                    SwitchService.create({
+                        "id": switch_data["deviceId"],
+                        "name": switch_data["deviceName"],
+                        "description": "software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
+                        "model": switch_data["deviceType"], 
+                        "ip": switch_data["ipAddress"],
+                        "ansible_user": encode(os.getenv("PRIME_SWITCHES_SSH_USER")),
+                        "ansible_ssh_pass": encode(os.getenv("PRIME_SWITCHES_SSH_PASS")),
+                        "is_visible": True
+                        })
+                else:
+                    SwitchService.update(switch_data["deviceId"],{
+                        "name": switch_data["deviceName"],
+                        "description": "software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
+                        "model": switch_data["deviceType"], 
+                        "ip": switch_data["ipAddress"],
+                        "ansible_user": encode(os.getenv("PRIME_SWITCHES_SSH_USER")),
+                        "ansible_ssh_pass": encode(os.getenv("PRIME_SWITCHES_SSH_PASS"))
+                        })
         except Exception as err:
             print("Can't connect with prime to list switches, error: ", err, file=sys.stderr)
-        sw_from_db = Switch.query.all()
-        sw_from_db_dec_pass = []
-        for sw in sw_from_db:
-            sw.ansible_user = decode(sw.ansible_user)
-            sw.ansible_ssh_pass = decode(sw.ansible_ssh_pass)
-            sw_from_db_dec_pass.append(sw)
-        return sw_from_db_dec_pass + switches_from_prime
+        return db.session.query(Switch).all()
     
     @staticmethod
     async def get_by_id(id: int) -> Switch:
-        found_in_db = Switch.query.get(id)
-        if found_in_db is None:
-            prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
-            switches = prime_data['queryResponse']['entity']
-            swtich = list(filter(lambda x: x["devicesDTO"]["deviceId"] == id, switches))
-            if len(swtich) > 0:
-                switch_data = swtich[0]["devicesDTO"]
-                return Switch(
-                        id=switch_data["deviceId"],
-                        name=switch_data["deviceName"],
-                        description="software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
-                        model=switch_data["deviceType"], 
-                        ip=switch_data["ipAddress"],
-                        ansible_user=os.getenv("PRIME_SWITCHES_SSH_USER"),
-                        ansible_ssh_pass=os.getenv("PRIME_SWITCHES_SSH_PASS")
-                    )
-            return None
-        res = copy.copy(found_in_db)
-        res.ansible_user: decode(found_in_db.ansible_user)
-        res.ansible_ssh_pass: decode(found_in_db.ansible_ssh_pass)
-        return res
+        sws = SwitchService.get_all()
+        if len(sws) != 0 is None:
+            switch = list(filter(lambda x: x.id == id, sws))
+            if len(switch) > 0:
+                return switch[0]
+        return None
 
     @staticmethod
     def update(id: int, body) -> Switch:
         model = Switch.query.get(id)
         if model is None:
             return None
-        body["ansible_user"] = encode(body['ansible_user'])
-        body["ansible_ssh_pass"] = encode(body['ansible_ssh_pass'])
         model.update(body)
         db.session.commit()
         return model
@@ -82,8 +76,6 @@ class SwitchService:
 
     @staticmethod
     def create(new_attrs) -> Switch:
-        new_attrs = { **new_attrs, "ansible_user": encode(new_attrs['ansible_user'])} if new_attrs['ansible_user'] != None else new_attrs
-        new_attrs = { **new_attrs, "ansible_ssh_pass": encode(new_attrs['ansible_ssh_pass'])} if new_attrs['ansible_ssh_pass'] != None else new_attrs
         model = Switch(**new_attrs)
         db.session.add(model)
         db.session.commit()

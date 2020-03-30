@@ -27,6 +27,7 @@ def upgrade():
         sa.Column('ansible_user', sa.String(255), nullable=True),
         sa.Column('ansible_ssh_pass', sa.String(255), nullable=True),
         sa.Column('ansible_ssh_port', sa.Integer, nullable=True),
+        sa.Column('is_visible', sa.Boolean, default=True),
     )
 
 
