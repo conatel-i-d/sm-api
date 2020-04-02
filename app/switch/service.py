@@ -13,11 +13,11 @@ import pathlib
 class SwitchService:
     @staticmethod
     async def get_all() -> List[Switch]:
-        switches_from_prime = []
-        ids_sw_in_db =  map(lambda x: x[0], db.session.query(Switch.id).all())
-        print(ids_sw_in_db,file=sys.stderr)
+        # switches_from_prime = []
+        # ids_sw_in_db =  map(lambda x: x[0], db.session.query(Switch.id).all())
+        # print(ids_sw_in_db,file=sys.stderr)
         try:
-            # prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
+            prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
             with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
                 prime_data = json.load(json_file)
             switches = prime_data['queryResponse']['entity']
