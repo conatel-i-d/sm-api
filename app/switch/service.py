@@ -13,13 +13,12 @@ import pathlib
 class SwitchService:
     @staticmethod
     async def get_all() -> List[Switch]:
-        # switches_from_prime = []
-        # ids_sw_in_db =  map(lambda x: x[0], db.session.query(Switch.id).all())
-        # print(ids_sw_in_db,file=sys.stderr)
+        switches_from_prime = []
+        ids_sw_in_db =  map(lambda x: x[0], db.session.query(Switch.id).all())
         try:
             prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
-            with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
-                prime_data = json.load(json_file)
+            # with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
+            #     prime_data = json.load(json_file)
             switches = prime_data['queryResponse']['entity']
             for switch in switches:
                 switch_data = switch["devicesDTO"]
@@ -79,5 +78,13 @@ class SwitchService:
         model = Switch(**new_attrs)
         db.session.add(model)
         db.session.commit()
-
         return model
+
+    @staticmethod
+    async def get_macs(switch_id, nic_name):
+        switch = SwitchService.get_by_id(switch_id)
+        if switch == None:
+            raise SwitchNotFound
+        extra_vars = dict(interface_name=nic_name)
+        body = dict(limit=switch.name, extra_vars=extra_vars)
+        return await JobService.run_job_template_by_name('get-mac-address-table', body)
