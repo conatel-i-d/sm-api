@@ -10,15 +10,18 @@ from app.utils.prime import prime_fetch
 import copy
 import pathlib
 
+import asyncio
+from app.jobs.service import JobService
+
 class SwitchService:
     @staticmethod
     async def get_all() -> List[Switch]:
         switches_from_prime = []
         ids_sw_in_db =  map(lambda x: x[0], db.session.query(Switch.id).all())
         try:
-            prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
-            # with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
-            #     prime_data = json.load(json_file)
+            # prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
+            with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
+                prime_data = json.load(json_file)
             switches = prime_data['queryResponse']['entity']
             for switch in switches:
                 switch_data = switch["devicesDTO"]
@@ -88,3 +91,6 @@ class SwitchService:
         extra_vars = dict(interface_name=nic_name)
         body = dict(limit=switch.name, extra_vars=extra_vars)
         return await JobService.run_job_template_by_name('get-mac-address-table', body)
+
+class SwitchNotFound(Exception):
+    """No existe el switch"""
