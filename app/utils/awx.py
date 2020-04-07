@@ -17,8 +17,13 @@ async def awx_fetch(endpoint):
 
 async def awx_post(endpoint, data):
     url = AWX_BASE_URL + endpoint
-    async with aiohttp.ClientSession(auth=AUTH, json_serialize=json.dumps, timeout=TIMEOUT) as session:
-        async with session.post(url=url, json=data) as resp:
-            return await resp.json()
+    if data != None:
+        async with aiohttp.ClientSession(auth=AUTH, json_serialize=json.dumps, timeout=TIMEOUT) as session:
+            async with session.post(url=url, json=data) as resp:
+                return await resp.json()
+    else:
+        async with aiohttp.ClientSession(auth=AUTH, timeout=TIMEOUT) as session:
+            async with session.post(url=url) as resp:
+                return await resp.text()
 
 

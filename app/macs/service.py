@@ -13,6 +13,9 @@ import pathlib
 import asyncio
 from app.jobs.service import JobService
 from app.switch.service import SwitchService
+
+
+ENV = 'prod' if os.environ.get('ENV') == 'prod' else 'test'
 class MacService:
     @staticmethod
     async def get(switch_id):
@@ -36,7 +39,6 @@ class MacService:
             body = dict(limit=switch.name, extra_vars=extra_vars)
             macs_restults[str(sw_id)] = await JobService.run_job_template_by_name('show-mac-address-table', body)
         # Busca entre las macs obtenidas en el paso anterior y si encuentra una devuelve en que switch e interface la encontro
-        print(macs_restults, file=sys.stderr)
         for key,value in macs_restults.items():
             for nic_name,nic_value in value.items():
                 if isinstance(nic_value, Iterable):
@@ -49,10 +51,10 @@ class MacService:
     @staticmethod
     async def cancel_find_by_mac(switches_ids):
         for sw_id in switches_ids:
-            switch = SwitchService.get_by_id(sw_id)
+            switch = await SwitchService.get_by_id(sw_id)
             if switch == None:
                 raise SwitchNotFound
-            await JobService.cancel_jobs_by_template_name_and_host_name('show-mac-address-table', switch.name)
+            await JobService.cancel_jobs_by_template_name_and_host_name(f'{ENV}-show-mac-address-table', switch.name)
         return True
 
 class SwitchNotFound(Exception):
