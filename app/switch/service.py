@@ -51,12 +51,11 @@ class SwitchService:
     
     @staticmethod
     async def get_by_id(id: int) -> Switch:
-        sws = SwitchService.get_all()
-        if len(sws) != 0 is None:
-            switch = list(filter(lambda x: x.id == id, sws))
+        sws = await SwitchService.get_all()
+        if len(sws) > 0:
+            switch = list(filter(lambda x: x.id == int(id), sws))
             if len(switch) > 0:
                 return switch[0]
-        return None
 
     @staticmethod
     def update(id: int, body) -> Switch:

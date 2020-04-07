@@ -12,6 +12,7 @@ from .interfaces import SwitchInterfaces
 
 from app.utils.authorization import authorize 
 from app.utils.b64 import decode
+from app.macs.service import MacService
 
 api_description = """
 Representación de los switches de la empresa.
@@ -158,3 +159,20 @@ class SwitchInventoryResource(Resource):
         }
 
         return ApiResponse(sw_inv)
+
+
+@api.route("/<int:id>/macs")
+@api.param("id", "Identificador único del Switch")
+class SwitchMacResource(Resource):
+    """
+    Mac Resource
+    """
+    @async_action
+    @api.response(200, 'Lista de Switches', interfaces.many_response_model)
+    @authorize
+    async def get(self, switch_id: int):
+        """
+        Devuelve la lista de todaslas macs del switch
+        """
+        resp = await MacService.get(switch_id)
+        return ApiResponse(resp)

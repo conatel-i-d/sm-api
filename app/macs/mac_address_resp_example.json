@@ -1,0 +1,89 @@
+{
+  "changed": false,
+  "FastEthernet0/3": {
+    "mac_entries": [
+      { "vlan": 10, "type": "DYNAMIC", "mac_address": "b838.6107.6119" }
+    ]
+  },
+  "failed": false,
+  "FastEthernet0/14": {
+    "mac_entries": [
+      { "vlan": 1, "type": "DYNAMIC", "mac_address": "001c.b17e.3183" },
+      { "vlan": 1, "type": "DYNAMIC", "mac_address": "8815.440a.abf7" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "000c.293a.1d8f" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "000c.297c.25fb" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "000c.29ac.229e" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "000c.29c2.a35b" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "000c.29cb.1089" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "0018.0a5c.9900" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "8815.440a.abe0" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "9cb6.54ad.e624" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "e4c7.2269.7ceb" },
+      { "vlan": 2000, "type": "DYNAMIC", "mac_address": "00cb.bd00.00aa" },
+      { "vlan": 2000, "type": "DYNAMIC", "mac_address": "00cb.bd05.767e" },
+      { "vlan": 2000, "type": "DYNAMIC", "mac_address": "d0d0.fde0.8361" }
+    ]
+  },
+  "FastEthernet0/13": {
+    "mac_entries": [
+      { "vlan": 10, "type": "DYNAMIC", "mac_address": "d0d0.fd79.1bf1" },
+      { "vlan": 1, "type": "DYNAMIC", "mac_address": "d0d0.fd79.1bf1" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "d0d0.fd79.1bf1" },
+      { "vlan": 630, "type": "DYNAMIC", "mac_address": "d0d0.fd79.1bf1" }
+    ]
+  },
+  "FastEthernet0/4": {
+    "mac_entries": [
+      { "vlan": 10, "type": "DYNAMIC", "mac_address": "c47d.4f3a.3edd" }
+    ]
+  },
+  "FastEthernet0/21": {
+    "mac_entries": [
+      { "vlan": 10, "type": "DYNAMIC", "mac_address": "001b.2b00.2ac8" },
+      { "vlan": 10, "type": "DYNAMIC", "mac_address": "0026.523f.ec19" },
+      { "vlan": 10, "type": "DYNAMIC", "mac_address": "00c0.b750.0a19" },
+      { "vlan": 10, "type": "DYNAMIC", "mac_address": "78da.6edb.7a4f" },
+      { "vlan": 10, "type": "DYNAMIC", "mac_address": "d0c2.82e0.4eef" },
+      { "vlan": 1, "type": "DYNAMIC", "mac_address": "0026.523f.ec19" },
+      { "vlan": 80, "type": "DYNAMIC", "mac_address": "0026.523f.ec19" },
+      { "vlan": 85, "type": "DYNAMIC", "mac_address": "0026.523f.ec19" },
+      { "vlan": 100, "type": "DYNAMIC", "mac_address": "0026.523f.ec19" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "0018.0a0f.f480" },
+      { "vlan": 501, "type": "DYNAMIC", "mac_address": "0026.523f.ec19" },
+      { "vlan": 506, "type": "DYNAMIC", "mac_address": "0026.523f.ec19" },
+      { "vlan": 630, "type": "DYNAMIC", "mac_address": "0000.0c07.ac1e" },
+      { "vlan": 630, "type": "DYNAMIC", "mac_address": "0026.523f.ec19" }
+    ]
+  },
+  "CPU": {
+    "mac_entries": [
+      { "vlan": "All", "type": "STATIC", "mac_address": "0100.0ccc.cccc" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0100.0ccc.cccd" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0000" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0001" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0002" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0003" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0004" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0005" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0006" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0007" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0008" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0009" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.000a" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.000b" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.000c" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.000d" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.000e" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.000f" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "0180.c200.0010" },
+      { "vlan": "All", "type": "STATIC", "mac_address": "ffff.ffff.ffff" }
+    ]
+  },
+  "FastEthernet0/24": {
+    "mac_entries": [
+      { "vlan": 1, "type": "DYNAMIC", "mac_address": "001b.2b00.2a98" },
+      { "vlan": 20, "type": "DYNAMIC", "mac_address": "0018.0a0f.f481" },
+      { "vlan": 50, "type": "DYNAMIC", "mac_address": "683a.1e35.f167" }
+    ]
+  }
+}

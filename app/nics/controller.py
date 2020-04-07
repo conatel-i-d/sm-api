@@ -17,7 +17,7 @@ from .service import NicsService, SwitchNotFound
 from app.errors import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure, ApiException
 
 api_description = """
-Representación de los switches de la empresa.
+Representación de las nics del switch.
 """
 
 api = Namespace('Nics', description=api_description)
