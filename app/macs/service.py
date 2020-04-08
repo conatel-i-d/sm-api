@@ -46,11 +46,11 @@ class MacService:
                         for curr_mac in nic_value['mac_entries']:
                             if curr_mac['mac_address'].find(mac_or_mac_substr) >= 0:
                                 sw = await SwitchService.get_by_id(key)
-                                
-                                interfaces_result.append(dict(
-                                    switch_id=sw.id,
-                                    switch_name=sw.name,
-                                    name=nic_name))
+                                if nic_value['type'] == 'STATIC':
+                                    interfaces_result.append(dict(
+                                        switch_id=sw.id,
+                                        switch_name=sw.name,
+                                        name=nic_name))
         return interfaces_result
 
     @staticmethod
