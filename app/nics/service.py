@@ -36,29 +36,5 @@ class NicsService:
         result = await JobService.run_job_template_by_name('show-interfaces-information', body)
         return result
 
-
-    @staticmethod
-    async def get_by_switch_id_prime_preference(switch_id):
-        """
-        Devuelve la información de todas las interfaces para esto intenta traese los datos del prime, 
-        y de nose ser posible lo intenta con el awx, quien consulta directamente al switch.
-        
-        Args:
-        switch_id (int): Identidad del switch
-        """
-        try:
-            nics = await  prime_fetch(f'/')
-        except:
-            print("nada")
-        # Aca parsear lo que devuelve el fetch y si todo va bien devolver aca nomas!! <<<<=============
-        switch = await SwitchService.get_by_id(switch_id)
-        if switch == None:
-            raise SwitchNotFound
-        extra_vars = dict(something='awesome')
-        body = dict(limit=switch.name, extra_vars=extra_vars)
-        result = await JobService.run_job_template_by_name('show-interfaces-information', body)
-        return result
-
-
 class SwitchNotFound(Exception):
     """No existe el switch"""

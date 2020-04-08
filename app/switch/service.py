@@ -17,7 +17,7 @@ class SwitchService:
     @staticmethod
     async def get_all() -> List[Switch]:
         switches_from_prime = []
-        ids_sw_in_db =  map(lambda x: x[0], db.session.query(Switch.id).all())
+        ids_sw_in_db =  list(map(lambda x: int(x[0]), db.session.query(Switch.id).all()))
         try:
             # prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
             with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
@@ -25,9 +25,9 @@ class SwitchService:
             switches = prime_data['queryResponse']['entity']
             for switch in switches:
                 switch_data = switch["devicesDTO"]
-                if not (switch_data["deviceId"] in ids_sw_in_db):
+                if not (int(switch_data["deviceId"]) in ids_sw_in_db):
                     SwitchService.create({
-                        "id": switch_data["deviceId"],
+                        "id": int(switch_data["deviceId"]),
                         "name": switch_data["deviceName"],
                         "description": "software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
                         "model": switch_data["deviceType"], 
@@ -37,7 +37,7 @@ class SwitchService:
                         "is_visible": True
                         })
                 else:
-                    SwitchService.update(switch_data["deviceId"],{
+                    SwitchService.update(int(switch_data["deviceId"]),{
                         "name": switch_data["deviceName"],
                         "description": "software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
                         "model": switch_data["deviceType"], 
