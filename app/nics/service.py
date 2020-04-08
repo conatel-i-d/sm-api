@@ -11,7 +11,7 @@ from app.utils.prime import prime_fetch
 class NicsService:
     @staticmethod
     async def reset_switch_nic(switch_id, nic_name):
-        switch = SwitchService.get_by_id(switch_id)
+        switch = await SwitchService.get_by_id(switch_id)
         if switch == None:
             raise SwitchNotFound
         extra_vars = dict(interface_name=nic_name)

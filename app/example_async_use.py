@@ -15,9 +15,7 @@ async def index():
     contador = 0
     async with aiohttp.ClientSession() as session:
         for i in range(10):
-            print("before fetch", file=sys.stderr)
             html = await fetch(session, 'https://api.telemetry.conatest.click/clients')
-            print(html, file=sys.stderr)
             contador += 1
     return 'Hello world whit total: ' + str(contador)
 

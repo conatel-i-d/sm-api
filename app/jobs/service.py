@@ -124,7 +124,6 @@ class JobService:
 
     @classmethod
     async def cancel_jobs_by_template_name_and_host_name(cls, job_template_name, limit_host_name):
-        print(f'before cancel job: name {job_template_name}  host: {limit_host_name}', file=sys.stderr)
         try:
             all_jobs = list((await JobService.get_jobs_from_awx())["results"])
         except:
@@ -136,7 +135,6 @@ class JobService:
                 x["status"] in ["running","pending","waiting"],
                 all_jobs )
         for job in jobs_for_cancel:
-            print(f'in for to cancel job {job["id"]}', file=sys.stderr)
             try:
                 await awx_post(f'/api/v2/jobs/{job["id"]}/cancel/', None)
             except:
