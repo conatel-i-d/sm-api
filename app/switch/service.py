@@ -19,7 +19,7 @@ class SwitchService:
         switches_from_prime = []
         ids_sw_in_db =  list(map(lambda x: int(x[0]), db.session.query(Switch.id).all()))
         try:
-            prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true')
+            prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true&.maxResults=300&.firstResult=0')
             # with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
             #     prime_data = json.load(json_file)
             switches = prime_data['queryResponse']['entity']
