@@ -49,7 +49,8 @@ class MacService:
                                 interfaces_result.append(dict(
                                     switch_id=sw.id,
                                     switch_name=sw.name,
-                                    name=nic_name))
+                                    name=nic_name,
+                                    type=curr_mac['type']))
         return interfaces_result
 
     @staticmethod
