@@ -29,7 +29,7 @@ class SwitchService:
                     SwitchService.create({
                         "id": int(switch_data["deviceId"]),
                         "name": switch_data["deviceName"],
-                        "description": "software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
+                        "description": "software_type: {0}, software_version: {1}".format(switch_data.get("softwareType","unknown"),switch_data.get("softwareVersion","unknown")),
                         "model": switch_data["deviceType"], 
                         "ip": switch_data["ipAddress"],
                         "ansible_user": encode(os.getenv("PRIME_SWITCHES_SSH_USER")),
@@ -39,7 +39,7 @@ class SwitchService:
                 else:
                     SwitchService.update(int(switch_data["deviceId"]),{
                         "name": switch_data["deviceName"],
-                        "description": "software_type: {0}, software_version: {1}".format(switch_data["softwareType"],switch_data["softwareVersion"]),
+                        "description": "software_type: {0}, software_version: {1}".format(switch_data.get("softwareType","unknown"),switch_data.get("softwareVersion","unknown")),
                         "model": switch_data["deviceType"], 
                         "ip": switch_data["ipAddress"],
                         "ansible_user": encode(os.getenv("PRIME_SWITCHES_SSH_USER")),
