@@ -19,7 +19,7 @@ depends_on = None
 def upgrade():
     op.create_table(
         'switch',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', sa.BIGINT, primary_key=True),
         sa.Column('name', sa.String(255), nullable=False),
         sa.Column('ip', sa.String(15), nullable=False),
         sa.Column('description', sa.String(255), nullable=True),
