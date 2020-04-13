@@ -52,7 +52,9 @@ class MacService:
         print("macs_results: ", macs_results, flush=True)
         # Busca entre las macs obtenidas en el paso anterior y si encuentra una devuelve en que switch e interface la encontro
         for key,value in macs_results.items():
+            print("switch id en primer for: ", key, flush=True)
             for nic_name,nic_value in value.items():
+                print("nic name en primer for: ", nic_name, flush=True)
                 if isinstance(nic_value, Iterable):
                     if 'mac_entries' in nic_value:
                         for curr_mac in nic_value['mac_entries']:
