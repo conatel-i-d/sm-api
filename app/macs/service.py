@@ -31,13 +31,11 @@ class MacService:
         interfaces_result = []
         macs_restults = dict()
         # Carga las macs de todos los switches pasados en switches_ids
-        for sw_id in switches_ids:
-            switch = await SwitchService.get_by_id(sw_id)
-            if switch == None:
-                raise SwitchNotFound
-            extra_vars = dict()
-            body = dict(limit=switch.name, extra_vars=extra_vars)
-            macs_restults[str(sw_id)] = await JobService.run_job_template_by_name('show-mac-address-table', body)
+
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(show_mac_addr_table_multiple_sws_paralell(switches_ids, macs_restults))
+        loop.close()
+
         # Busca entre las macs obtenidas en el paso anterior y si encuentra una devuelve en que switch e interface la encontro
         for key,value in macs_restults.items():
             for nic_name,nic_value in value.items():
@@ -52,6 +50,16 @@ class MacService:
                                     name=nic_name,
                                     type=curr_mac['type']))
         return interfaces_result
+
+    @staticmethod
+    async def show_mac_addr_table_multiple_sws_paralell(switches_ids, macs_restults):
+        for sw_id in switches_ids:
+            switch = await SwitchService.get_by_id(sw_id)
+            if switch == None:
+                raise SwitchNotFound
+            extra_vars = dict()
+            body = dict(limit=switch.name, extra_vars=extra_vars)
+            macs_restults[str(sw_id)] = await JobService.run_job_template_by_name('show-mac-address-table', body)
 
     @staticmethod
     async def cancel_find_by_mac(switches_ids):
