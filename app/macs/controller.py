@@ -39,8 +39,7 @@ class FindMacResource(Resource):
         if json_data is None:
             raise ApiException('JSON body is undefined')
         switches_ids = list(json_data["switchesToFindIds"])
-        mac = json_data["mac"]
-        resp = await MacService.find_by_mac(switches_ids, mac)
+        resp = await MacService.find_by_mac(switches_ids)
         return ApiResponse(resp)
 
 
