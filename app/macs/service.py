@@ -30,9 +30,9 @@ class MacService:
     async def show_mac_addr_table(switch, macs_results):
         extra_vars = dict()
         body = dict(limit=switch["name"], extra_vars=extra_vars)
-        print("ejecutar show mac para sw: ", switch["name"], file=sys.stderr)
+        print("ejecutar show mac para sw: ", switch["name"], flush=True)
         macs_results[str(switch["id"])] = await JobService.run_job_template_by_name('show-mac-address-table', body)
-        print("show mac para sw: " + switch["name"] + "execute success!!!", file=sys.stderr)
+        print("show mac para sw: " + switch["name"] + "execute success!!!", flush=True)
         return True
 
     @staticmethod
@@ -48,8 +48,8 @@ class MacService:
             else:
                 switches.append({ "id": sw_id, "name": switch.name})
         await asyncio.gather(*[MacService.show_mac_addr_table(sw, macs_results) for sw in switches])
-        print("=======================================================", file=sys.stderr)
-        print("macs_results: ", macs_results, file=sys.stderr)
+        print("=======================================================", flush=True)
+        print("macs_results: ", macs_results, flush=True)
         # Busca entre las macs obtenidas en el paso anterior y si encuentra una devuelve en que switch e interface la encontro
         for key,value in macs_results.items():
             for nic_name,nic_value in value.items():
