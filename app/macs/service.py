@@ -27,7 +27,7 @@ class MacService:
         return await JobService.run_job_template_by_name('show-mac-address-table', body)
 
     @staticmethod
-    async def show_mac_addr_table(switch, macs_restults):
+    async def show_mac_addr_table(switch, macs_results):
         extra_vars = dict()
         body = dict(limit=switch["name"], extra_vars=extra_vars)
         macs_results[str(switch["id"])] = await JobService.run_job_template_by_name('show-mac-address-table', body)
@@ -36,7 +36,7 @@ class MacService:
     @staticmethod
     async def find_by_mac(switches_ids, mac_or_mac_substr):
         interfaces_result = []
-        macs_restults = dict()
+        macs_results = dict()
         switches = []
         # Carga las macs de todos los switches pasados en switches_ids
         for sw_id in switches_ids:
@@ -45,10 +45,10 @@ class MacService:
                 raise SwitchNotFound
             else:
                 switches.append({ "id": sw_id, "name": switch.name})
-        await asyncio.gather(*[MacService.show_mac_addr_table(sw, macs_restults) for sw in switches])
+        await asyncio.gather(*[MacService.show_mac_addr_table(sw, macs_results) for sw in switches])
 
         # Busca entre las macs obtenidas en el paso anterior y si encuentra una devuelve en que switch e interface la encontro
-        for key,value in macs_restults.items():
+        for key,value in macs_results.items():
             for nic_name,nic_value in value.items():
                 if isinstance(nic_value, Iterable):
                     if 'mac_entries' in nic_value:
