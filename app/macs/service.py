@@ -42,9 +42,7 @@ class MacService:
         macs_restults = dict()
         # Carga las macs de todos los switches pasados en switches_ids
 
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(MacService.show_mac_addr_table_multiple_sws_paralell(switches_ids, macs_restults))
-        loop.close()
+        await asyncio.gather(MacService.show_mac_addr_table_multiple_sws_paralell(switches_ids, macs_restults))
 
         # Busca entre las macs obtenidas en el paso anterior y si encuentra una devuelve en que switch e interface la encontro
         for key,value in macs_restults.items():
