@@ -10,7 +10,8 @@ from .service import SwitchService
 from .model import Switch
 from .interfaces import SwitchInterfaces
 
-from app.utils.authorization import authorize 
+from app.utils.authorization import authorize
+from app.utils.logger import log
 from app.utils.b64 import decode
 from app.macs.service import MacService
 
@@ -37,6 +38,7 @@ class SwitchResource(Resource):
     @async_action
     @api.response(200, 'Lista de Switches', interfaces.many_response_model)
     @authorize
+    @log
     async def get(self):
         """
         Devuelve la lista de Switches
