@@ -21,6 +21,10 @@ def log(func):
         token = request.headers.get('Token')
         if not token:
             return ApiResponse({"Error": "Token not found"}, 400)
+        http_method = request.method
+        http_url = request.url
+        payload = json.dumps(request.get_json())
+
         token_dec = jwt.decode(token, PUBLIC_KEY, algorithms=['RS256'], audience='dashboard', options={
             "verify_signature": False,
             "verify_aud": False,
@@ -31,15 +35,32 @@ def log(func):
             "verify_sub": False,
             "verify_jti": False,
             "verify_at_hash": False
-        })
+        })        
         user_name = token_dec["name"]
         user_email = token_dec["email"]
-        now_datetime = datetime.datetime.now()
-        print("user_name", user_name, flush=True)
-        print("user_email", user_email, flush=True)
-        print("now_datetime", now_datetime, flush=True)  
-        response = func(*args, **kwargs)
-        print("status", response.status, flush=True)
-        print("body", response.value, flush=True)
+        date_start = datetime.datetime.now()  
+        try:
+          response = func(*args, **kwargs)
+        except Exception as err:
+          response = ApiException(err, 500, 'Internal Server Error')
+        if isinstance(response, ApiResponse):
+          response_status_code = response.status
+          message = str(response.value or "")[0:250] + "..."
+        elif isinstance(response, ApiException):
+          response_status_code = response.status
+          message = response.message
+        date_end = datetime.datetime.now()
+
+        print({
+          http_method,
+          http_url,
+          payload,
+          user_name,
+          user_email,
+          date_start,
+          response_status_code,
+          message,
+          date_end
+        },flush=True)
         return response
     return log_handler

@@ -13,9 +13,12 @@ class Log(db.Model):  # type: ignore
     http_method = Column(String(30))
     http_url = Column(String(30))
     payload = Column(String(1000))
-    user = Column(String(255), unique=True)
+    user_name = Column(String(255))
+    user_email = Column(String(255))
     response_status_code = Column(Integer)
-    date = Column(DateTime(), default=datetime.datetime.utcnow)
+    message = Column(String(255))
+    date_start = Column(DateTime(), default=datetime.datetime.utcnow)
+    date_end = Column(DateTime(), default=datetime.datetime.utcnow)
     def update(self, changes):
         for key, val in changes.items():
             setattr(self, key, val)
