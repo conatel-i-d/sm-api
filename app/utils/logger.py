@@ -33,7 +33,7 @@ def log(func):
             "verify_at_hash": False
         })
         user_name = token_dec["name"]
-        user_email = token_dec["user_email"]
+        user_email = token_dec["email"]
         now_datetime = datetime.datetime.now()
         print("user_name", user_name, flush=True)
         print("user_email", user_email, flush=True)
