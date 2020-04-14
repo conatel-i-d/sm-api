@@ -52,15 +52,15 @@ def log(func):
         date_end = datetime.datetime.now()
 
         print({
-          http_method,
-          http_url,
-          payload,
-          user_name,
-          user_email,
-          date_start,
-          response_status_code,
-          message,
-          date_end
+          "http_method": http_method,
+          "http_url": http_url,
+          "payload": payload,
+          "user_name": user_name,
+          "user_email": user_email,
+          "date_start": date_start,
+          "response_status_code": response_status_code,
+          "message": message,
+          "date_end": date_end
         },flush=True)
         return response
     return log_handler
