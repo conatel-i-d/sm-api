@@ -28,3 +28,9 @@ class ConnectToAwxFailure(Exception):
 
 class PlaybookCancelFailure(Exception):
     """Fallo la intentar cancelar un job"""
+
+class NicNotFound(Exception):
+    """No existe la nic"""
+
+class SwitchNotFound(Exception):
+    """No existe el switch"""

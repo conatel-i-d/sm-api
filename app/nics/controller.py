@@ -12,9 +12,9 @@ from app.utils.async_action import async_action
 from app.utils.authorization import authorize
 
 from app.switch.service import SwitchService
-from .service import NicsService, SwitchNotFound
+from .service import NicsService
 
-from app.errors import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure, ApiException
+from app.errors import SwitchNotFound, JobTemplateNotFound, PlaybookTimeout, PlaybookFailure, ApiException
 
 api_description = """
 Representación de las nics del switch.

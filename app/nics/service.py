@@ -8,6 +8,7 @@ import asyncio
 from app.switch.service import SwitchService
 from app.jobs.service import JobService
 from app.utils.prime import prime_fetch
+from app.errors import SwitchNotFound
 class NicsService:
     @staticmethod
     async def reset_switch_nic(switch_id, nic_name):
@@ -36,5 +37,4 @@ class NicsService:
         result = await JobService.run_job_template_by_name('show-interfaces-information', body)
         return result
 
-class SwitchNotFound(Exception):
-    """No existe el switch"""
+

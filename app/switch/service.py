@@ -56,12 +56,13 @@ class SwitchService:
             switch = list(filter(lambda x: x.id == int(id), sws))
             if len(switch) > 0:
                 return switch[0]
+        raise SwitchNotFound
 
     @staticmethod
     def update(id: int, body) -> Switch:
         model = Switch.query.get(id)
         if model is None:
-            return None
+            raise SwitchNotFound
         model.update(body)
         db.session.commit()
         return model

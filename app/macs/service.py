@@ -14,6 +14,7 @@ import asyncio
 from app.jobs.service import JobService
 from app.switch.service import SwitchService
 
+from app.errors import ApiException
 
 ENV = 'prod' if os.environ.get('ENV') == 'prod' else 'test'
 class MacService:
@@ -21,7 +22,7 @@ class MacService:
     async def get(switch_id):
         switch = await SwitchService.get_by_id(switch_id)
         if switch == None:
-            raise SwitchNotFound
+            raise ApiException(f'No se encuentra el switch con el id {switch_id}', 404)
         extra_vars = dict()
         body = dict(limit=switch.name, extra_vars=extra_vars)
         return await JobService.run_job_template_by_name('show-mac-address-table', body)
@@ -45,35 +46,18 @@ class MacService:
         for sw_id in switches_ids:
             switch = await SwitchService.get_by_id(sw_id)
             if switch == None:
-                raise SwitchNotFound
+                raise ApiException(f'No se encuentra el switch con el id {sw_id}', 404)
             else:
                 switches.append({ "id": sw_id, "name": switch.name})
         await asyncio.gather(*[MacService.show_mac_addr_table(sw, macs_results) for sw in switches])
         return macs_results
-        # Busca entre las macs obtenidas en el paso anterior y si encuentra una devuelve en que switch e interface la encontro
-        # for sw in macs_results:
-        #     for nic_name,nic_value in value.items():
-        #         print("nic name en primer for: ", nic_name, flush=True)
-        #         if isinstance(nic_value, Iterable):
-        #             if 'mac_entries' in nic_value:
-        #                 for curr_mac in nic_value['mac_entries']:
-        #                     if curr_mac['mac_address'].find(mac_or_mac_substr) >= 0:
-        #                         sw = await SwitchService.get_by_id(key)
-        #                         interfaces_result.append(dict(
-        #                             switch_id=sw.id,
-        #                             switch_name=sw.name,
-        #                             name=nic_name,
-        #                             type=curr_mac['type']))
-        # return interfaces_result
+        
 
     @staticmethod
     async def cancel_find_by_mac(switches_ids):
         for sw_id in switches_ids:
             switch = await SwitchService.get_by_id(sw_id)
             if switch == None:
-                raise SwitchNotFound
+                raise ApiException(f'No se encuentra el switch con el id {sw_id}', 404)
             await JobService.cancel_jobs_by_template_name_and_host_name(f'{ENV}-show-mac-address-table', switch.name)
         return True
-
-class SwitchNotFound(Exception):
-    """No existe el switch"""
