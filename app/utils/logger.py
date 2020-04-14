@@ -15,9 +15,9 @@ PUBLIC_KEY = f"""
 """
 
 
-def log(func):
+async def log(func):
     @wraps(func)
-    def log_handler(*args, **kwargs):
+    async def log_handler(*args, **kwargs):
         token = request.headers.get('Token')
         if not token:
             return ApiResponse({"Error": "Token not found"}, 400)
@@ -38,8 +38,8 @@ def log(func):
         print("user_name", user_name, flush=True)
         print("user_email", user_email, flush=True)
         print("now_datetime", now_datetime, flush=True)  
-        result, status_code = func(*args, **kwargs)
+        result, status_code = await func(*args, **kwargs)
         print("result", result, flush=True)
         print("status_code", status_code, flush=True)
         return make_response(result, status_code)
-    return log_handler
+    return await log_handler
