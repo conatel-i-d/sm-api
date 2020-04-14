@@ -4,7 +4,7 @@ import datetime
 from jose import jwt
 from jose.exceptions import JWTError, ExpiredSignatureError, JWTClaimsError, JWKError
 from functools import wraps
-from flask import request, redirect, Response
+from flask import request, redirect, Response, make_response
 from app.api_response import ApiResponse
 from app.errors import ApiException
 
@@ -38,7 +38,8 @@ def log(func):
         print("user_name", user_name, flush=True)
         print("user_email", user_email, flush=True)
         print("now_datetime", now_datetime, flush=True)  
-        response = func(*args, **kwargs)
-        print("response", response, flush=True)
-        return response
+        result, status_code = func(*args, **kwargs)
+        print("result", result, flush=True)
+        print("status_code", status_code, flush=True)
+        return make_response(result, status_code)
     return log_handler
