@@ -39,6 +39,7 @@ def log(func):
         print("user_email", user_email, flush=True)
         print("now_datetime", now_datetime, flush=True)  
         response = func(*args, **kwargs)
-        print("response", response, flush=True)
+        print("status", response.status, flush=True)
+        print("body", response.value, flush=True)
         return response
     return log_handler
