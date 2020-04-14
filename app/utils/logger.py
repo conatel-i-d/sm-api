@@ -38,8 +38,7 @@ def log(func):
         print("user_name", user_name, flush=True)
         print("user_email", user_email, flush=True)
         print("now_datetime", now_datetime, flush=True)  
-        result, status_code = func(*args, **kwargs)
-        print("result", result, flush=True)
-        print("status_code", status_code, flush=True)
-        return make_response(result, status_code)
+        response = func(*args, **kwargs)
+        print("response", response, flush=True)
+        return response
     return log_handler
