@@ -42,12 +42,15 @@ def log(func):
         try:
           response = func(*args, **kwargs)
         except Exception as err:
-          response = ApiException(err, 500, 'Internal Server Error')
+          print("==========>>>>1", err, flush=True)
+          print("==========>>>>2", err.message or "no hay mesage", flush=True)
+          response = ApiException(str(err), 500, 'Internal Server Error')
         if isinstance(response, ApiResponse):
           response_status_code = response.status
           message = str(response.value or "")[0:250] + "..."
         elif isinstance(response, ApiException):
           response_status_code = response.status
+          print("llegue aca", flush=True)
           message = response.message
         date_end = datetime.datetime.now()
 
