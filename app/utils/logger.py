@@ -1,10 +1,10 @@
 import os
 import json
-
+import datetime
 from jose import jwt
 from jose.exceptions import JWTError, ExpiredSignatureError, JWTClaimsError, JWKError
 from functools import wraps
-from flask import request, redirect
+from flask import request, redirect, Response
 from app.api_response import ApiResponse
 from app.errors import ApiException
 
@@ -32,6 +32,13 @@ def log(func):
             "verify_jti": False,
             "verify_at_hash": False
         })
-        print(token_dec, flush=True)
-        return func(*args, **kwargs)
+        user_name = token_dec["name"]
+        user_email = token_dec["user_email"]
+        now_datetime = datetime.datetime.now()
+        print("user_name", user_name, flush=True)
+        print("user_email", user_email, flush=True)
+        print("now_datetime", now_datetime, flush=True)  
+        response = func(*args, **kwargs)
+        print("response", response, flush=True)
+        return response
     return log_handler
