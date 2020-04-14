@@ -3,7 +3,7 @@ from flask import request
 from flask_restplus import Namespace, Resource, fields
 from flask.wrappers import Response
 from app.utils.async_action import async_action
-
+from app.utils.logger import log
 from app.api_response import ApiResponse
 from app.errors import ApiException, JobTemplateNotFound, PlaybookFailure, PlaybookTimeout
 from .service import MacService
@@ -26,11 +26,11 @@ api = Namespace('Macs', description=api_description)
     503: 'Service Unavailable',
 })
 class FindMacResource(Resource):
-    
     @api.expect([str])
     @api.response(200, 'Interfaces donde se encontro la mac')
-    @authorize
+    @log
     @async_action
+    @authorize
     async def post(self):
         """
         Busca una mac o substring de la misma en la lista de swtiches recibidos en el body.
@@ -58,8 +58,9 @@ class FindMacResource(Resource):
 class CancelFindMacResource(Resource):
     @api.expect([str])
     @api.response(201, 'Trabajos de buscar mac cancelados correctamente')
-    @authorize
+    @log
     @async_action
+    @authorize
     async def post(self):
         """
         Dados una lista de ids de swithces, busca los trabajos "busqueda de mac" pendientes en esos switches y los cancela.

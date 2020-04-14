@@ -10,12 +10,12 @@ from flask.wrappers import Response
 from app.api_response import ApiResponse
 from app.utils.async_action import async_action
 from app.utils.authorization import authorize
+from app.utils.logger import log
 
 from app.switch.service import SwitchService
 from .service import NicsService
 
 from app.errors import SwitchNotFound, JobTemplateNotFound, PlaybookTimeout, PlaybookFailure, ApiException
-
 api_description = """
 Representación de las nics del switch.
 """
@@ -31,6 +31,7 @@ class InterfaceResource(Resource):
 
 
     # @api.response(200, 'Lista de Interfaces', interfaces.many_response_model)
+    @log
     @async_action
     @authorize
     async def get(self, switch_id: int):
@@ -58,6 +59,7 @@ class InterfaceResource(Resource):
     """
     Interface Resource
     """
+    @log
     @async_action
     @authorize
     async def post(self, switch_id: int):

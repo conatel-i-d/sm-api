@@ -36,9 +36,9 @@ class SwitchResource(Resource):
     Switch Resource
     """
     @api.response(200, 'Lista de Switches', interfaces.many_response_model)
-    @authorize
     @log
     @async_action
+    @authorize
     async def get(self):
         """
         Devuelve la lista de Switches
@@ -54,6 +54,7 @@ class SwitchResource(Resource):
             raise ApiException('Fallo la ejecución de la tarea')
     @api.expect(interfaces.create_model)
     @api.response(200, 'Nuevo Switch', interfaces.single_response_model)
+    @log
     @authorize
     def post(self):
         """
@@ -68,6 +69,7 @@ class SwitchResource(Resource):
 
     @api.expect(interfaces.update_model)
     @api.response(200, 'Switches Actualizados', interfaces.many_response_model)
+    @log
     @authorize
     def put(self, id: int):
         """
@@ -91,8 +93,9 @@ class SwitchResource(Resource):
     503: 'Service Unavailable',
 })
 class SwitchIdResource(Resource):
-    @async_action
     @api.response(200, 'Switch', interfaces.single_response_model)
+    @log
+    @async_action
     @authorize
     async def get(self, id: int):
         """
@@ -112,6 +115,7 @@ class SwitchIdResource(Resource):
 
 
     @api.response(204, 'No Content')
+    @log
     @authorize
     def delete(self, id: int) -> Response:
         """
@@ -123,6 +127,7 @@ class SwitchIdResource(Resource):
 
     @api.expect(interfaces.update_model)
     @api.response(200, 'Switch Actualizado', interfaces.single_response_model)
+    @log
     @authorize
     def put(self, id: int):
         """
@@ -147,8 +152,8 @@ class SwitchInventoryResource(Resource):
     """
     Inventory switch Resource
     """
-    @async_action
     @api.response(200, 'Inventario con lista de swithces')
+    @async_action
     async def get(self):
         """
         Devuelve la lista de Switches
@@ -190,8 +195,9 @@ class SwitchMacResource(Resource):
     """
     Mac Resource
     """
-    @async_action
     @api.response(200, 'Lista de Interfaces con sus respectivas macs', interfaces.many_response_model)
+    @log
+    @async_action
     @authorize
     async def get(self, switch_id: int):
         """
