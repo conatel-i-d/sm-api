@@ -41,20 +41,19 @@ def log(func):
         date_start = datetime.datetime.now()  
         try:
             response = func(*args, **kwargs)
-            if isinstance(response, ApiResponse):
-                response_status_code = response.status
-                message = str(response.value or "")[0:250] + "..."
         except ApiException as err:
-            print(err, flush=True)
-            print(err.__class__, flush=True)
-            print(type(err), flush=True)
-            response_status_code = response.status
-            message = response.message
+            response = err
         except Exception as err:
-            response_status_code = 500
-            message = 'Internal server error'
-        date_end = datetime.datetime.now()
+            response = ApiException('Internal server error', 500, str(err))
 
+        if isinstance(response, ApiResponse):
+            response_status_code = response.status
+            message = str(response.value or "")[0:250] + "..."
+        elif isinstance(response, ApiException):
+          response_status_code = response.status
+          message = f'message: {response.message}, code: {response.code}'
+          response = ApiResponse(message, response_status_code)
+        date_end = datetime.datetime.now()  
         print({
           "http_method": http_method,
           "http_url": http_url,
