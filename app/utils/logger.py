@@ -50,10 +50,13 @@ def log(func):
             response_status_code = response.status
             message = str(response.value or "")[0:250] + "..."
         elif isinstance(response, ApiException):
+          if response.status == 500:
+            message = f'message: {response.message}, code: {response.code}'
+          else:
+            message = response.message 
           response_status_code = response.status
-          message = f'message: {response.message}, code: {response.code}'
           response = ApiResponse(message, response_status_code)
-        date_end = datetime.datetime.now()  
+        date_end = datetime.datetime.now()
         print({
           "http_method": http_method,
           "http_url": http_url,
