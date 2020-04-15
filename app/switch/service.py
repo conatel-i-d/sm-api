@@ -2,7 +2,7 @@ from app import db
 from typing import List
 from .model import Switch
 from app.utils.b64 import encode
-
+from app.errors import ApiException
 import os
 import json
 import sys
@@ -47,6 +47,7 @@ class SwitchService:
                         })
         except Exception as err:
             print("Can't connect with prime to list switches, error: ", err, file=sys.stderr)
+            raise ApiException("Can't connect with prime to list switches", 500, code="CiscoPrimeError")
         return db.session.query(Switch).all()
     
     @staticmethod

@@ -38,7 +38,7 @@ def log(func):
         })        
         user_name = token_dec["name"]
         user_email = token_dec["email"]
-        date_start = datetime.datetime.now()  
+        date_start = datetime.datetime.utcnow()
         try:
             response = func(*args, **kwargs)
         except ApiException as err:
@@ -50,24 +50,10 @@ def log(func):
             response_status_code = response.status
             message = str(response.value or "")[0:250] + "..."
         elif isinstance(response, ApiException):
-          if response.status == 500:
-            message = f'message: {response.message}, code: {response.code}'
-          else:
-            message = response.message 
+          message = response.message 
           response_status_code = response.status
           response = ApiResponse(message, response_status_code)
-        date_end = datetime.datetime.now()
-        # print({
-        #   "http_method": http_method,
-        #   "http_url": http_url,
-        #   "payload": payload,
-        #   "user_name": user_name,
-        #   "user_email": user_email,
-        #   "date_start": date_start,
-        #   "response_status_code": response_status_code,
-        #   "message": message,
-        #   "date_end": date_end
-        # },flush=True)
+        date_end = datetime.datetime.utcnow()
         LogService.create({
           "http_method": http_method,
           "http_url": http_url,

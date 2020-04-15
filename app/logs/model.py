@@ -11,7 +11,7 @@ class Log(db.Model):  # type: ignore
 
     id = Column(Integer(), primary_key=True)
     http_method = Column(String(30))
-    http_url = Column(String(30))
+    http_url = Column(String(255))
     payload = Column(String(1000))
     user_name = Column(String(255))
     user_email = Column(String(255))
