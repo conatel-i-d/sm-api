@@ -7,7 +7,7 @@ from functools import wraps
 from flask import request, redirect, Response, make_response
 from app.api_response import ApiResponse
 from app.errors import ApiException
-
+from app.logs.service import LogService
 PUBLIC_KEY = f"""
 -----BEGIN PUBLIC KEY----- 
 {os.environ.get('PUBLIC_KEY')}
@@ -57,7 +57,18 @@ def log(func):
           response_status_code = response.status
           response = ApiResponse(message, response_status_code)
         date_end = datetime.datetime.now()
-        print({
+        # print({
+        #   "http_method": http_method,
+        #   "http_url": http_url,
+        #   "payload": payload,
+        #   "user_name": user_name,
+        #   "user_email": user_email,
+        #   "date_start": date_start,
+        #   "response_status_code": response_status_code,
+        #   "message": message,
+        #   "date_end": date_end
+        # },flush=True)
+        LogService.create({
           "http_method": http_method,
           "http_url": http_url,
           "payload": payload,
@@ -67,6 +78,6 @@ def log(func):
           "response_status_code": response_status_code,
           "message": message,
           "date_end": date_end
-        },flush=True)
+        })
         return response
     return log_handler
