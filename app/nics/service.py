@@ -8,7 +8,7 @@ import asyncio
 from app.switch.service import SwitchService
 from app.jobs.service import JobService
 from app.utils.prime import prime_fetch
-from app.errors import SwitchNotFound
+from app.errors import ApiException, SwitchNotFound
 class NicsService:
     @staticmethod
     async def reset_switch_nic(switch_id, nic_name):
@@ -37,4 +37,14 @@ class NicsService:
         result = await JobService.run_job_template_by_name('show-interfaces-information', body)
         return result
 
-
+    @staticmethod
+    async def get_from_prime_by_switch_id(switch_id):
+        """
+        Devuelve la información de todas las interfaces a través
+        del AWX, quien consulta directamente al switch.
+        
+        Args:
+        switch_id (int): Identidad del switch
+        """
+        result = await prime_fetch(f'/webacs/api/v4/data/InventoryDetails/{switch_id}.json?.full=true')
+        return result
