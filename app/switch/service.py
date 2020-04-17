@@ -18,9 +18,12 @@ class SwitchService:
     async def get_all() -> List[Switch]:
         switches_from_prime = []
         sw_names_in_db =  list(map(lambda x: int(x[0]), db.session.query(Switch.name).all()))
+        print("============= aca 1", flush=True)
         try:
             prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true&.maxResults=300&.firstResult=0')
+            print("============= aca 2", flush=True)
             switches = prime_data['queryResponse']['entity']
+            print("============= aca 3", flush=True)
             for switch in switches:
                 switch_data = switch["devicesDTO"]
                 if not (int(switch_data["name"]) in sw_names_in_db):

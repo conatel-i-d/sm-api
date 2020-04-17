@@ -44,6 +44,7 @@ class SwitchResource(Resource):
         Devuelve la lista de Switches
         """
         try:
+            print("=============== aca", flush=True)
             entities = await SwitchService.get_all()
             return ApiResponse(interfaces.many_schema.dump(entities).data)
         except JobTemplateNotFound:
