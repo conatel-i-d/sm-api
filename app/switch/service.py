@@ -47,7 +47,7 @@ class SwitchService:
                             "ansible_ssh_pass": encode(os.getenv("PRIME_SWITCHES_SSH_PASS"))
                         })
         except Exception as err:
-            print("Can't connect with prime to list switches, error: ", err, file=sys.stderr)
+            print("Can't connect with prime to list switches, error: ", err, flush=True)
             raise ApiException("Can't connect with prime to list switches", 500, code="CiscoPrimeError")
         return db.session.query(Switch).all()
     
