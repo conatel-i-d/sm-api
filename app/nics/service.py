@@ -43,8 +43,9 @@ class NicsService:
             result = prime_result.update(sw_result)
             print("updated result ========>>>", str(result)[0:255], flush=True )
             return result
-        except:
+        except Exception as err:
             print("Switch no pertenece al prime", flush=True)
+            print(str(err), flush=True)
         return sw_result
 
     @staticmethod
@@ -63,3 +64,4 @@ class NicsService:
             raise ApiException("Error al comunicarse con cisco prime")
         for interface in from_prime["entity"][0]["inventoryDetailsDTO"]["ethernetInterfaces"]["ethernetInterface"]:
             result[interface["name"]] = interface
+        return result
