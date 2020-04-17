@@ -41,6 +41,20 @@ class NicsService:
         result = fromPrime[1].update(fromPrime[0])
         return result
 
+        switch = await SwitchService.get_by_id(switch_id)
+        if switch == None:
+            raise SwitchNotFound
+        extra_vars = dict(something='awesome')
+        body = dict(limit=switch.name, extra_vars=extra_vars)
+        sw_result = await JobService.run_job_template_by_name('show-interfaces-information', body)
+        try:
+            prime_result = await get_from_prime_by_switch_id(switch_id)
+            result = prime_result.update(sw_result)
+            return result
+        except:
+            print("Switch no pertenece al prime", flush=True)
+        return sw_result
+
     @staticmethod
     async def get_from_prime_by_switch_id(switch_id):
         """
