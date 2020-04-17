@@ -33,17 +33,6 @@ class NicsService:
         switch = await SwitchService.get_by_id(switch_id)
         if switch == None:
             raise SwitchNotFound
-        extra_vars=dict(something='awesome')
-        body=dict(limit=switch.name, extra_vars=extra_vars)
-        fromPrime = await asyncio.gather(
-            JobService.run_job_template_by_name('show-interfaces-information', body),
-            prime_fetch(f'/webacs/api/v4/data/InventoryDetails/{switch_id}.json'))
-        result = fromPrime[1].update(fromPrime[0])
-        return result
-
-        switch = await SwitchService.get_by_id(switch_id)
-        if switch == None:
-            raise SwitchNotFound
         extra_vars = dict(something='awesome')
         body = dict(limit=switch.name, extra_vars=extra_vars)
         sw_result = await JobService.run_job_template_by_name('show-interfaces-information', body)
