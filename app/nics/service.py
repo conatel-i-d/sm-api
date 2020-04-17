@@ -59,7 +59,8 @@ class NicsService:
         """
         result = dict()
         try:
-            from_prime = await prime_fetch(f'/ webacs/api/v4/data/InventoryDetails/{switch_id}.json')
+            from_prime = await prime_fetch(f'/webacs/api/v4/data/InventoryDetails/{switch_id}.json')
+            print("from prime: " + from_prime )
             for interface in from_prime["entity"][0]["inventoryDetailsDTO"]["ethernetInterfaces"]["ethernetInterface"]:
                 result[interface["name"]] = interface
             return result
