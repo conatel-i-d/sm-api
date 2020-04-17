@@ -45,7 +45,7 @@ class NicsService:
     async def get_from_prime_by_switch_id(switch_id):
         """
         Devuelve la información de todas las interfaces a través
-        del AWX, quien consulta directamente al switch.
+        del la api del Cisco Prime, quien consulta directamente al switch.
 
         Args:
         switch_id (int): Identidad del switch

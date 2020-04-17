@@ -36,6 +36,7 @@ class SwitchResource(Resource):
     Switch Resource
     """
     @api.response(200, 'Lista de Switches', interfaces.many_response_model)
+    @log
     @async_action
     @authorize
     async def get(self):
