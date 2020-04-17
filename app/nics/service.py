@@ -36,13 +36,11 @@ class NicsService:
         extra_vars = dict(something='awesome')
         body = dict(limit=switch.name, extra_vars=extra_vars)
         sw_result = await JobService.run_job_template_by_name('show-interfaces-information', body)
-        print("sw_result ========>>>", str(sw_result)[0:255], flush=True )
         try:
             prime_result = await NicsService.get_from_prime_by_switch_id(switch_id)
-            print("prime result ========>>>", str(prime_result)[0:255], flush=True )
-            result = prime_result.update(sw_result)
-            print("updated result ========>>>", str(result)[0:255], flush=True )
-            return result
+            prime_result.update(sw_result)
+            print(f'prime result {prime_result}', flush=True)
+            return prime_result
         except Exception as err:
             print("Switch no pertenece al prime", flush=True)
             print(str(err), flush=True)
@@ -60,7 +58,6 @@ class NicsService:
         result = dict()
         try:
             from_prime = await prime_fetch(f'/webacs/api/v4/data/InventoryDetails/{switch_id}.json')
-            print("from prime: " + str(from_prime) )
             for interface in from_prime['queryResponse']["entity"][0]["inventoryDetailsDTO"]["ethernetInterfaces"]["ethernetInterface"]:
                 result[interface["name"]] = interface
             return result
