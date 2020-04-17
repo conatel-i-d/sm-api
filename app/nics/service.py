@@ -47,9 +47,12 @@ class NicsService:
         extra_vars = dict(something='awesome')
         body = dict(limit=switch.name, extra_vars=extra_vars)
         sw_result = await JobService.run_job_template_by_name('show-interfaces-information', body)
+        print("sw_result ========>>>", str(sw_result)[0:255], flush=True )
         try:
             prime_result = await get_from_prime_by_switch_id(switch_id)
+            print("prime result ========>>>", str(prime_result)[0:255], flush=True )
             result = prime_result.update(sw_result)
+            print("updated result ========>>>", str(result)[0:255], flush=True )
             return result
         except:
             print("Switch no pertenece al prime", flush=True)
