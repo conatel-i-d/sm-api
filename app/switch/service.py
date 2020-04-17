@@ -25,9 +25,9 @@ class SwitchService:
             switches = prime_data['queryResponse']['entity']
             for switch in switches:
                 switch_data = switch["devicesDTO"]
-                if not (switch_data["deviceName"] in sw_names_in_db) and not (switch_data["deviceId"] in sw_ids_in_db):
+                if not (switch_data["deviceName"] in sw_names_in_db) and not (switch_data["@id"] in sw_ids_in_db):
                     SwitchService.create({
-                        "id": int(switch_data["deviceId"]),
+                        "id": int(switch_data["@id"]),
                         "name": switch_data["deviceName"],
                         "description": "software_type: {0}, software_version: {1}".format(switch_data.get("softwareType","unknown"),switch_data.get("softwareVersion","unknown")),
                         "model": switch_data["deviceType"], 
@@ -38,9 +38,9 @@ class SwitchService:
                         })
                 else:
                     db.session.query(Switch).filter(
-                        Switch.name == switch_data["deviceName"] or Switch.id == int(switch_data["deviceId"])).update(
+                        Switch.name == switch_data["deviceName"] or Switch.id == int(switch_data["@id"])).update(
                         {
-                            "id": int(switch_data["deviceId"]),
+                            "id": int(switch_data["@id"]),
                             "name": switch_data["deviceName"],
                             "description": "software_type: {0}, software_version: {1}".format(switch_data.get("softwareType","unknown"),switch_data.get("softwareVersion","unknown")),
                             "model": switch_data["deviceType"], 
