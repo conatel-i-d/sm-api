@@ -38,7 +38,7 @@ class SwitchService:
                         })
                 else:
                     db.session.query(Switch).filter(
-                        Switch.name == switch_data["name"] or Switch.id == int(switch_data["deviceId"])).update(
+                        Switch.name == switch_data["deviceName"] or Switch.id == int(switch_data["deviceId"])).update(
                         {
                             "id": int(switch_data["deviceId"]),
                             "name": switch_data["deviceName"],
