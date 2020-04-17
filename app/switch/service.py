@@ -32,6 +32,8 @@ class SwitchService:
                 if switch_data["deviceName"] == "SW_2960_AGA.ctmsg.local":
                     print(f'fuera ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
                 if not (switch_data["deviceName"] in sw_names_in_db) and not (switch_data["@id"] in sw_ids_in_db):
+                    if int(switch_data["@id"]) == 10234300:
+                        print(f'donde no deberia entrar ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
                     SwitchService.create({
                         "id": int(switch_data["@id"]),
                         "name": switch_data["deviceName"],
