@@ -39,8 +39,11 @@ class NicsService:
         try:
             result = dict()
             prime_result = await NicsService.get_from_prime_by_switch_id(switch_id)
-            for key, value in prime_result.items():
-                result[key] = { **value, **sw_result[key]}
+            for key, value in sw_result.items():
+                if key in prime_result:
+                    result[key] = { **prime_result[key], **value}
+                else:
+                    result[key] = value
             return result
         except Exception as err:
             print(f'Switch no pertenece al prime. Error: {str(err)}', flush=True)
