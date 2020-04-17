@@ -60,8 +60,9 @@ class NicsService:
         result = dict()
         try:
             from_prime = await prime_fetch(f'/ webacs/api/v4/data/InventoryDetails/{switch_id}.json')
+            for interface in from_prime["entity"][0]["inventoryDetailsDTO"]["ethernetInterfaces"]["ethernetInterface"]:
+                result[interface["name"]] = interface
+            return result
         except Exception as err:
-            raise ApiException("Error al comunicarse con cisco prime")
-        for interface in from_prime["entity"][0]["inventoryDetailsDTO"]["ethernetInterfaces"]["ethernetInterface"]:
-            result[interface["name"]] = interface
-        return result
+            print("Error in get_from_prime: " + str(err), flush=True)
+            raise ApiException("Error al cargar nics del Cisco Prime. Error: " + str(err))
