@@ -41,11 +41,9 @@ class NicsService:
             prime_result = await NicsService.get_from_prime_by_switch_id(switch_id)
             for key, value in prime_result.items():
                 result[key] = { **value, **sw_result[key]}
-            print(f'result {result}', flush=True)
             return result
         except Exception as err:
-            print("Switch no pertenece al prime", flush=True)
-            print(str(err), flush=True)
+            print(f'Switch no pertenece al prime. Error: {str(err)}', flush=True)
         return sw_result
 
     @staticmethod

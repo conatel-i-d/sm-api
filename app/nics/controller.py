@@ -57,7 +57,7 @@ class InterfaceResource(Resource):
     @log
     @async_action
     @authorize
-    async def get_prime(self, switch_id: int):
+    async def get(self, switch_id: int):
         """
         Devuelve la lista de Interfaces obtenidas desde el CISCO PRIME
         """
