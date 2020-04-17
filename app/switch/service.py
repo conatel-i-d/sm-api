@@ -26,9 +26,9 @@ class SwitchService:
             for switch in switches:
                 switch_data = switch["devicesDTO"]
                 if int(switch_data["@id"]) == 10234300:
-                        print(f'fuera ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
-                    if switch_data["deviceName"] == "SW_2960_AGA.ctmsg.local":
-                        print(f'fuera ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
+                    print(f'fuera ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
+                if switch_data["deviceName"] == "SW_2960_AGA.ctmsg.local":
+                    print(f'fuera ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
                 if not (switch_data["deviceName"] in sw_names_in_db) and not (switch_data["@id"] in sw_ids_in_db):
                     SwitchService.create({
                         "id": int(switch_data["@id"]),
