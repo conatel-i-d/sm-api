@@ -93,6 +93,7 @@ class SwitchResource(Resource):
 })
 class SwitchIdResource(Resource):
     @api.response(200, 'Switch', interfaces.single_response_model)
+    @log
     @async_action
     @authorize
     async def get(self, id: int):
@@ -194,6 +195,7 @@ class SwitchMacResource(Resource):
     Mac Resource
     """
     @api.response(200, 'Lista de Interfaces con sus respectivas macs', interfaces.many_response_model)
+    @log
     @async_action
     @authorize
     async def get(self, switch_id: int):

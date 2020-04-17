@@ -29,7 +29,7 @@ class InterfaceResource(Resource):
     """
     Interface Resource
     """
-
+    @log
     @async_action
     @authorize
     async def get(self, switch_id: int):
@@ -54,8 +54,9 @@ class InterfaceResource(Resource):
 @api.route("/<int:switch_id>/nics_prime")
 @api.param("switch_id", "Identificador único del Switch")
 class InterfaceResource(Resource):
+    @log
     @async_action
-    # @authorize
+    @authorize
     async def get_prime(self, switch_id: int):
         """
         Devuelve la lista de Interfaces obtenidas desde el CISCO PRIME

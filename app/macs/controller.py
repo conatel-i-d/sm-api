@@ -28,6 +28,7 @@ api = Namespace('Macs', description=api_description)
 class FindMacResource(Resource):
     @api.expect([str])
     @api.response(200, 'Interfaces donde se encontro la mac')
+    @log
     @async_action
     @authorize
     async def post(self):
@@ -57,6 +58,7 @@ class FindMacResource(Resource):
 class CancelFindMacResource(Resource):
     @api.expect([str])
     @api.response(201, 'Trabajos de buscar mac cancelados correctamente')
+    @log
     @async_action
     @authorize
     async def post(self):
