@@ -23,8 +23,10 @@ class SwitchService:
             sw_ids_in_db = list(map(lambda x: x.id, db_switches))
             prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true&.maxResults=300&.firstResult=0')
             switches = prime_data['queryResponse']['entity']
+            print(f'swithces {str(switches)[0:200]}', flush=True)
             for switch in switches:
                 switch_data = switch["devicesDTO"]
+                print(switch_data["deviceName"], flush=True)
                 if int(switch_data["@id"]) == 10234300:
                     print(f'fuera ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
                 if switch_data["deviceName"] == "SW_2960_AGA.ctmsg.local":
