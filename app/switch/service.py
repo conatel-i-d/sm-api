@@ -9,7 +9,6 @@ import sys
 from app.utils.prime import prime_fetch
 import copy
 import pathlib
-
 import asyncio
 from app.jobs.service import JobService
 
@@ -18,22 +17,14 @@ class SwitchService:
     async def get_all() -> List[Switch]:
         switches_from_prime = []
         try:
-            db_switches = Switch.query.all()
-            sw_names_in_db =  list(map(lambda x: x.name, db_switches))
-            sw_ids_in_db = list(map(lambda x: x.id, db_switches))
+            ids_sw_in_db =  list(map(lambda x: int(x[0]), db.session.query(Switch.id).all()))
             prime_data = await prime_fetch('/webacs/api/v4/data/Devices.json?.full=true&.maxResults=300&.firstResult=0')
+            # with open(os.path.join(pathlib.Path(__file__).parent.absolute(), 'prime_devices_full.json')) as json_file:
+            #     prime_data = json.load(json_file)
             switches = prime_data['queryResponse']['entity']
-            print(f'swithces {str(switches)[0:200]}', flush=True)
             for switch in switches:
                 switch_data = switch["devicesDTO"]
-                print(switch_data["deviceName"], flush=True)
-                if int(switch_data["@id"]) == 10234300:
-                    print(f'fuera ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
-                if switch_data["deviceName"] == "SW_2960_AGA.ctmsg.local":
-                    print(f'fuera ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
-                if not (switch_data["deviceName"] in sw_names_in_db) and not (switch_data["@id"] in sw_ids_in_db):
-                    if int(switch_data["@id"]) == 10234300:
-                        print(f'donde no deberia entrar ==> {switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
+                if not (int(switch_data["@id"]) in ids_sw_in_db):
                     SwitchService.create({
                         "id": int(switch_data["@id"]),
                         "name": switch_data["deviceName"],
@@ -45,23 +36,16 @@ class SwitchService:
                         "is_visible": True
                         })
                 else:
-                    if int(switch_data["@id"]) == 10234300:
-                        print(f'{switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
-                    if switch_data["deviceName"] == "SW_2960_AGA.ctmsg.local":
-                        print(f'{switch_data["deviceName"]} {switch_data["@id"]}', flush=True)
-                    db.session.query(Switch).filter(
-                        Switch.name == switch_data["deviceName"] or Switch.id == int(switch_data["@id"])).update(
-                        {
-                            "id": int(switch_data["@id"]),
-                            "name": switch_data["deviceName"],
-                            "description": "software_type: {0}, software_version: {1}".format(switch_data.get("softwareType","unknown"),switch_data.get("softwareVersion","unknown")),
-                            "model": switch_data["deviceType"], 
-                            "ip": switch_data["ipAddress"],
-                            "ansible_user": encode(os.getenv("PRIME_SWITCHES_SSH_USER")),
-                            "ansible_ssh_pass": encode(os.getenv("PRIME_SWITCHES_SSH_PASS"))
+                    SwitchService.update(int(switch_data["@id"]),{
+                        "name": switch_data["deviceName"],
+                        "description": "software_type: {0}, software_version: {1}".format(switch_data.get("softwareType","unknown"),switch_data.get("softwareVersion","unknown")),
+                        "model": switch_data["deviceType"], 
+                        "ip": switch_data["ipAddress"],
+                        "ansible_user": encode(os.getenv("PRIME_SWITCHES_SSH_USER")),
+                        "ansible_ssh_pass": encode(os.getenv("PRIME_SWITCHES_SSH_PASS"))
                         })
         except Exception as err:
-            print("Can't connect with prime to list switches, error: ", err, flush=True)
+            print("Can't connect with prime to list switches, error: ", err, file=sys.stderr)
             raise ApiException("Can't connect with prime to list switches", 500, code="CiscoPrimeError")
         return db.session.query(Switch).all()
     
