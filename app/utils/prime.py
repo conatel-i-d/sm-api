@@ -4,7 +4,7 @@ import aiohttp
 from aiohttp.client import ClientTimeout
 import sys
 
-PRIME_API_URL = os.getenv('CISCO_PRIME_BASE_USER')
+PRIME_API_URL = os.getenv('CISCO_PRIME_BASE_URL')
 AUTH = aiohttp.BasicAuth(os.getenv('CISCO_PRIME_USER'), os.getenv('CISCO_PRIME_PASSWORD'))
 TIMEOUT_SECONDS = 5
 TIMEOUT = ClientTimeout(total=TIMEOUT_SECONDS)
