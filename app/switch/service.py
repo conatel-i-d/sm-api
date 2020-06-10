@@ -46,7 +46,6 @@ class SwitchService:
                         })
         except Exception as err:
             print("Can't connect with prime to list switches, error: ", err, file=sys.stderr)
-            raise ApiException("Can't connect with prime to list switches", 500, code="CiscoPrimeError")
         return db.session.query(Switch).all()
     
     @staticmethod
