@@ -10,7 +10,7 @@ from typing import List
 from .model import Job
 
 
-ENV = 'prod' if os.environ.get('ENV') == 'prod' else 'test'
+ENV = 'prod' if os.environ.get('ENV') == 'prod' else 'dev'
 TIMEOUT_SECONDS = 120
 
 
