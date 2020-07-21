@@ -30,5 +30,31 @@ class SwitchInterfaces(BaseInterfaces):
             example='192.168.1.1'    
         )
     )
-    create_model_keys = ['name', 'description', 'model', 'ip']
-    update_model_keys = ['name', 'description', 'model', 'ip']
+    ansible_user = dict(
+        m=marshmallow_fields.String(attribute='ansible_user'),
+        r=restplus_fields.String(
+            description='Nombre del usuario para conectarse ssh',
+            required=False,
+            example='my_name'    
+        )
+    )
+    ansible_ssh_pass = dict(
+        m=marshmallow_fields.String(attribute='ansible_ssh_pass'),
+        r=restplus_fields.String(
+            description='Password del usuario para conectarse ssh',
+            required=False,
+            example='my_pass'    
+        )
+    )
+
+    ansible_ssh_port = dict(
+        m=marshmallow_fields.Int(attribute='ansible_ssh_port'),
+        r=restplus_fields.Integer(description='Puerto pasa conectarse por ssh', required=False, example=22),
+    )
+    is_visible = dict(
+        m=marshmallow_fields.Boolean(attribute='is_visible'),
+        r=restplus_fields.Boolean(description='Determina si el switch es visible para el operador', required=False, example=False),
+    )
+
+    create_model_keys = ['name', 'description', 'model', 'ip', 'ansible_user', 'ansible_ssh_pass', 'ansible_ssh_port', 'is_visible' ]
+    update_model_keys = ['name', 'description', 'model', 'ip', 'ansible_user', 'ansible_ssh_pass', 'ansible_ssh_port', 'is_visible' ]

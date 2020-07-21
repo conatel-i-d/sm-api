@@ -10,13 +10,15 @@ class Log(db.Model):  # type: ignore
     __tablename__ = "logs"
 
     id = Column(Integer(), primary_key=True)
-    event_type = Column(String(30))
-    event_result = Column(String(30))
-    entity = Column(String(30))
-    payload = Column(String(500))
-    user_id = Column(String(255), unique=True)
-    date = Column(DateTime(), default=datetime.datetime.utcnow)
-
+    http_method = Column(String(30))
+    http_url = Column(String(255))
+    payload = Column(String(1000))
+    user_name = Column(String(255))
+    user_email = Column(String(255))
+    response_status_code = Column(Integer)
+    message = Column(String(255))
+    date_start = Column(DateTime(), default=datetime.datetime.utcnow)
+    date_end = Column(DateTime(), default=datetime.datetime.utcnow)
     def update(self, changes):
         for key, val in changes.items():
             setattr(self, key, val)

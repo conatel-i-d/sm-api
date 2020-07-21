@@ -4,14 +4,14 @@ import sys
 from time import time
 
 from app import db
-from app.errors import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure
+from app.errors import JobTemplateNotFound, PlaybookTimeout, PlaybookFailure, ConnectToAwxFailure, PlaybookCancelFailure
 from app.utils.awx import awx_fetch, awx_post
 from typing import List
 from .model import Job
 
 
-ENV = 'prod' if os.environ.get('ENV') == 'prod' else 'test'
-TIMEOUT_SECONDS = 60
+ENV = 'prod' if os.environ.get('ENV') == 'prod' else 'dev'
+TIMEOUT_SECONDS = 120
 
 
 class JobService:
@@ -54,7 +54,6 @@ class JobService:
     @staticmethod
     def delete_by_job_id(job_id: int) -> List[int]:
         model = Job.query.filter(Job.job_id == job_id).first()
-        print("model antes de eliminar ===============>" + str(model), file=sys.stdout)
         if model is None:
             return []
         db.session.delete(model)
@@ -113,3 +112,31 @@ class JobService:
                 return
             await asyncio.sleep(1)
         raise PlaybookTimeout
+
+    @classmethod
+    async def get_jobs_from_awx(cls):
+        """
+        Solicita a AWX y luego devuelve la lista de Jobs con sus respectivos estados
+
+        Args:
+        """
+        return await awx_fetch("/api/v2/jobs?order_by=-created&page_size=100")
+
+    @classmethod
+    async def cancel_jobs_by_template_name_and_host_name(cls, job_template_name, limit_host_name):
+        try:
+            all_jobs = list((await JobService.get_jobs_from_awx())["results"])
+        except:
+            raise ConnectToAwxFailure
+        jobs_for_cancel = filter(
+            lambda x:
+                x["summary_fields"]["job_template"]["name"] == job_template_name and
+                x["limit"] == limit_host_name and
+                x["status"] in ["running","pending","waiting"],
+                all_jobs )
+        for job in jobs_for_cancel:
+            try:
+                await awx_post(f'/api/v2/jobs/{job["id"]}/cancel/', None)
+            except:
+                raise PlaybookCancelFailure
+        return True

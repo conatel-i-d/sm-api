@@ -19,11 +19,15 @@ depends_on = None
 def upgrade():
     op.create_table(
         'switch',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', sa.BIGINT, primary_key=True),
         sa.Column('name', sa.String(255), nullable=False),
         sa.Column('ip', sa.String(15), nullable=False),
         sa.Column('description', sa.String(255), nullable=True),
         sa.Column('model', sa.String(255), nullable=True),
+        sa.Column('ansible_user', sa.String(255), nullable=True),
+        sa.Column('ansible_ssh_pass', sa.String(255), nullable=True),
+        sa.Column('ansible_ssh_port', sa.Integer, nullable=True),
+        sa.Column('is_visible', sa.Boolean, default=True),
     )
 
 

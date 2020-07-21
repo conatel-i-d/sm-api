@@ -1,0 +1,958 @@
+{
+  "queryResponse": {
+    "@type": "InventoryDetails",
+    "@domain": "ROOT-DOMAIN",
+    "@requestUrl": "https://172.16.1.217/webacs/api/v4/data/InventoryDetails/380988640",
+    "@responseType": "getEntity",
+    "@rootUrl": "https://172.16.1.217/webacs/api/v4/data",
+    "entity": [
+      {
+        "@dtoType": "inventoryDetailsDTO",
+        "@type": "InventoryDetails",
+        "@url": "https://172.16.1.217/webacs/api/v4/data/InventoryDetails/380988640",
+        "inventoryDetailsDTO": {
+          "@displayName": "380988640",
+          "@id": 380988640,
+          "cdpNeighbors": {
+            "cdpNeighbor": [
+              {
+                "duplexMode": "FULL_DUPLEX",
+                "farEndInterface": "GigabitEthernet1/0/25",
+                "interfaceIndex": 10126,
+                "nearEndInterface": "GigabitEthernet1/0/26",
+                "neighborCapabilities": "Switch IGMP",
+                "neighborDeviceName": "SW_CHMI_C-8_4.ctmsg.local",
+                "neighborDevicePlatformType": "cisco WS-C2960X-24PD-L"
+              },
+              {
+                "duplexMode": "UNKNOWN",
+                "farEndInterface": "eth0",
+                "interfaceIndex": 10102,
+                "nearEndInterface": "GigabitEthernet1/0/2",
+                "neighborCapabilities": "Host",
+                "neighborDeviceName": "axis-accc8e89a46a",
+                "neighborDevicePlatformType": "Linux"
+              },
+              {
+                "duplexMode": "FULL_DUPLEX",
+                "farEndInterface": "GigabitEthernet1/0/26",
+                "interfaceIndex": 10125,
+                "nearEndInterface": "GigabitEthernet1/0/25",
+                "neighborCapabilities": "Switch IGMP",
+                "neighborDeviceName": "SW_CHMI_C-8_2.ctmsg.local",
+                "neighborDevicePlatformType": "cisco WS-C2960X-24PD-L"
+              }
+            ]
+          },
+          "chassis": {
+            "chassis": [
+              {
+                "description": "WS-C2960X-24PD-L",
+                "entPhysicalIndex": "1001",
+                "modelNr": "WS-C2960X-24PD-L",
+                "name": "1",
+                "productId": "WS-C2960X-24PD-L",
+                "serialNr": "FOC1829S38A",
+                "versionId": "V02"
+              }
+            ]
+          },
+          "ethernetInterfaces": {
+            "ethernetInterface": [
+              {
+                "accessVlan": 704,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_RADIODIGITAL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb897" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/23",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 1,
+                "adminStatus": "UP",
+                "desiredVlanMode": "DYNAMIC_AUTO",
+                "duplexMode": "FULLDUPLEX",
+                "macAddress": { "octets": "346288cfb89c" },
+                "mtu": 1500,
+                "name": "TenGigabitEthernet1/0/2",
+                "nativeVlan": 0,
+                "operationalStatus": "DOWN",
+                "speed": 10000000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb884" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/4",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb891" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/17",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2306,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " Sensor Auscultacion_MI",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "FULLDUPLEX",
+                "macAddress": { "octets": "346288cfb895" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/21",
+                "nativeVlan": 1,
+                "operationalStatus": "UP",
+                "operationalTrunkEncapsulation": "OTHER",
+                "operationalVlanMode": "ACCESS",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 100000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb88e" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/14",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 704,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " RADIO",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "FULLDUPLEX",
+                "macAddress": { "octets": "346288cfb881" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/1",
+                "nativeVlan": 1,
+                "operationalStatus": "UP",
+                "operationalTrunkEncapsulation": "OTHER",
+                "operationalVlanMode": "ACCESS",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 100000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "FULLDUPLEX",
+                "macAddress": { "octets": "346288cfb882" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/2",
+                "nativeVlan": 1,
+                "operationalStatus": "UP",
+                "operationalTrunkEncapsulation": "OTHER",
+                "operationalVlanMode": "ACCESS",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 100000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb88b" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/11",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 0,
+                "adminStatus": "DOWN",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb8b9" },
+                "mtu": 1500,
+                "name": "FastEthernet0",
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "ACCESS",
+                "speed": 100000000
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb888" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/8",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 1,
+                "adminStatus": "UP",
+                "desiredVlanMode": "DYNAMIC_AUTO",
+                "duplexMode": "FULLDUPLEX",
+                "macAddress": { "octets": "346288cfb89b" },
+                "mtu": 1500,
+                "name": "TenGigabitEthernet1/0/1",
+                "nativeVlan": 0,
+                "operationalStatus": "DOWN",
+                "speed": 10000000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb885" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/5",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb892" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/18",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb88f" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/15",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2306,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " Sensor Auscultacion",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb896" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/22",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb894" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/20",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb886" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/6",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb889" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/9",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb893" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/19",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb88c" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/12",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb88a" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/10",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 1,
+                "adminStatus": "UP",
+                "allowedVlanIds": "204,704,2300-2306",
+                "description": " TRUNK CHMI_C-8_3 CHMI_C-8_4",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "TRUNK",
+                "duplexMode": "FULLDUPLEX",
+                "macAddress": { "octets": "346288cfb89a" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/26",
+                "nativeVlan": 999,
+                "operationalStatus": "UP",
+                "operationalTrunkEncapsulation": "_8021Q",
+                "operationalVlanMode": "TRUNK",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 1000000000,
+                "trunkingEncapsulationNegotiation": true
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb887" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/7",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb890" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/16",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 704,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_RADIODIGITAL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "FULLDUPLEX",
+                "macAddress": { "octets": "346288cfb898" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/24",
+                "nativeVlan": 1,
+                "operationalStatus": "UP",
+                "operationalTrunkEncapsulation": "OTHER",
+                "operationalVlanMode": "ACCESS",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 100000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 2300,
+                "adminStatus": "DOWN",
+                "allowedVlanIds": "ALL",
+                "description": " C-8_MI_LAN_CORP_TEL",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb88d" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/13",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              },
+              {
+                "accessVlan": 1,
+                "adminStatus": "UP",
+                "allowedVlanIds": "204,704,2300-2306",
+                "description": " TRUNK CHMI_C-8_3 CHMI_C-8_2",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "TRUNK",
+                "duplexMode": "FULLDUPLEX",
+                "macAddress": { "octets": "346288cfb899" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/25",
+                "nativeVlan": 999,
+                "operationalStatus": "UP",
+                "operationalTrunkEncapsulation": "_8021Q",
+                "operationalVlanMode": "TRUNK",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 1000000000,
+                "trunkingEncapsulationNegotiation": true
+              },
+              {
+                "accessVlan": 2303,
+                "adminStatus": "UP",
+                "allowedVlanIds": "ALL",
+                "description": " CCTV_SIMOVICH",
+                "desiredTrunkingEncapsulation": "_8021Q",
+                "desiredVlanMode": "ACCESS",
+                "duplexMode": "AUTO_NEGOTIATE",
+                "macAddress": { "octets": "346288cfb883" },
+                "mtu": 1500,
+                "name": "GigabitEthernet1/0/3",
+                "nativeVlan": 1,
+                "operationalStatus": "DOWN",
+                "operationalVlanMode": "DOWN",
+                "pruneEligibleVlanIds": "2-1001",
+                "speed": 10000000,
+                "trunkingEncapsulationNegotiation": false
+              }
+            ]
+          },
+          "fans": {
+            "fan": [
+              {
+                "description": "Switch 1 - WS-C2960X-24PD-L - Fan 0",
+                "name": "Switch 1 - WS-C2960X-24PD-L - Fan 0",
+                "operationalStatus": "normal",
+                "vendorEquipmentType": "cevFanCat2960XCFM38"
+              }
+            ]
+          },
+          "ipInterfaces": {
+            "ipInterface": [
+              {
+                "adminStatus": "UP",
+                "ipAddress": { "address": "10.20.4.13" },
+                "name": "Vlan204",
+                "operationalStatus": "UP",
+                "prefixLength": "24"
+              }
+            ]
+          },
+          "modules": {
+            "module": [
+              {
+                "description": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "equipmentId": 348519728,
+                "equipmentType": "MODULE",
+                "nrPorts": 25,
+                "operationStatus": "ok",
+                "physicalLocation": "1",
+                "productName": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "softwareVersion": "15.2(6)E1",
+                "vendorType": "cevModuleWsC2960x24pdL"
+              }
+            ]
+          },
+          "physicalPorts": {
+            "physicalPort": [
+              {
+                "description": "GigabitEthernet1/0/15",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/15",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/1",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/1",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/17",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/17",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/18",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/18",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/19",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/19",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/2",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/2",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/4",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/4",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/16",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/16",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/3",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/3",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "1000BaseSX SFP",
+                "equipmentId": 348519730,
+                "name": "GigabitEthernet1/0/26",
+                "residingModule": "TenGigabitEthernet1/0/2 Container",
+                "vendorEquipmentType": "cevPortGigBaseSX"
+              },
+              {
+                "description": "GigabitEthernet1/0/5",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/5",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/6",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/6",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/7",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/7",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/9",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/9",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/8",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/8",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "1000BaseSX SFP",
+                "equipmentId": 348519729,
+                "name": "GigabitEthernet1/0/25",
+                "residingModule": "TenGigabitEthernet1/0/1 Container",
+                "vendorEquipmentType": "cevPortGigBaseSX"
+              },
+              {
+                "description": "StackPort1",
+                "equipmentId": 348519728,
+                "name": "StackPort1",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortUnknown"
+              },
+              {
+                "description": "GigabitEthernet1/0/23",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/23",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/20",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/20",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/21",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/21",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/24",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/24",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/22",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/22",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/14",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/14",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/10",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/10",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/13",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/13",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/11",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/11",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              },
+              {
+                "description": "GigabitEthernet1/0/12",
+                "equipmentId": 348519728,
+                "name": "GigabitEthernet1/0/12",
+                "residingModule": "Switch 1 - WS-C2960X-24PD-L - Fixed Module 0",
+                "vendorEquipmentType": "cevPortBaseTEther"
+              }
+            ]
+          },
+          "powerSupplies": {
+            "powerSupply": [
+              {
+                "description": "Switch 1 - WS-C2960X-24PD-L - Power Supply 0",
+                "name": "Switch 1 - WS-C2960X-24PD-L - Power Supply 0",
+                "operationalStatus": "normal",
+                "serialNumber": "DCB182473Z2",
+                "vendorEquipmentType": "1.3.6.1.4.1.9.12.3.1.6.357"
+              }
+            ]
+          },
+          "sensors": {
+            "sensor": [
+              {
+                "description": "GigabitEthernet1/0/25 Supply Voltage Sensor",
+                "entPhysicalIndex": "1047",
+                "name": "Gi1/0/25 Supply Voltage Sensor",
+                "precision": 2,
+                "status": "OK",
+                "type": "VOLTSDC",
+                "vendorSensorType": "cevSensorTransceiverVoltage"
+              },
+              {
+                "description": "GigabitEthernet1/0/25 Transmit Power Sensor",
+                "entPhysicalIndex": "1049",
+                "name": "Gi1/0/25 Transmit Power Sensor",
+                "precision": 1,
+                "status": "OK",
+                "type": "DBM",
+                "vendorSensorType": "cevSensorTransceiverTxPwr"
+              },
+              {
+                "description": "GigabitEthernet1/0/26 Module Temperature Sensor",
+                "entPhysicalIndex": "1040",
+                "name": "Gi1/0/26 Module Temperature Sensor",
+                "precision": 1,
+                "status": "OK",
+                "type": "CELSIUS",
+                "vendorSensorType": "cevSensorTransceiverTemp"
+              },
+              {
+                "description": "GigabitEthernet1/0/26 Transmit Power Sensor",
+                "entPhysicalIndex": "1043",
+                "name": "Gi1/0/26 Transmit Power Sensor",
+                "precision": 1,
+                "status": "OK",
+                "type": "DBM",
+                "vendorSensorType": "cevSensorTransceiverTxPwr"
+              },
+              {
+                "description": "GigabitEthernet1/0/25 Bias Current Sensor",
+                "entPhysicalIndex": "1048",
+                "name": "Gi1/0/25 Bias Current Sensor",
+                "precision": 1,
+                "status": "OK",
+                "type": "AMPERES",
+                "vendorSensorType": "cevSensorTransceiverCurrent"
+              },
+              {
+                "description": "GigabitEthernet1/0/26 Supply Voltage Sensor",
+                "entPhysicalIndex": "1041",
+                "name": "Gi1/0/26 Supply Voltage Sensor",
+                "precision": 2,
+                "status": "OK",
+                "type": "VOLTSDC",
+                "vendorSensorType": "cevSensorTransceiverVoltage"
+              },
+              {
+                "description": "GigabitEthernet1/0/25 Module Temperature Sensor",
+                "entPhysicalIndex": "1046",
+                "name": "Gi1/0/25 Module Temperature Sensor",
+                "precision": 1,
+                "status": "OK",
+                "type": "CELSIUS",
+                "vendorSensorType": "cevSensorTransceiverTemp"
+              },
+              {
+                "description": "GigabitEthernet1/0/26 Receive Power Sensor",
+                "entPhysicalIndex": "1044",
+                "name": "Gi1/0/26 Receive Power Sensor",
+                "precision": 1,
+                "status": "OK",
+                "type": "DBM",
+                "vendorSensorType": "cevSensorTransceiverRxPwr"
+              },
+              {
+                "description": "GigabitEthernet1/0/26 Bias Current Sensor",
+                "entPhysicalIndex": "1042",
+                "name": "Gi1/0/26 Bias Current Sensor",
+                "precision": 1,
+                "status": "OK",
+                "type": "AMPERES",
+                "vendorSensorType": "cevSensorTransceiverCurrent"
+              },
+              {
+                "description": "Switch 1 - WS-C2960X-24PD-L - Sensor 0",
+                "entPhysicalIndex": "1008",
+                "equipmentName": "1",
+                "name": "Switch 1 - WS-C2960X-24PD-L - Sensor 0",
+                "precision": 0,
+                "status": "UNAVAILABLE",
+                "type": "UNKNOWN",
+                "vendorSensorType": "cevSensorModuleDeviceTemp"
+              },
+              {
+                "description": "GigabitEthernet1/0/25 Receive Power Sensor",
+                "entPhysicalIndex": "1050",
+                "name": "Gi1/0/25 Receive Power Sensor",
+                "precision": 1,
+                "status": "OK",
+                "type": "DBM",
+                "vendorSensorType": "cevSensorTransceiverRxPwr"
+              }
+            ]
+          },
+          "summary": {
+            "ciscoIdentityCapable": false,
+            "deviceId": 360386790,
+            "deviceName": "SW_CHMI_C-8_3.ctmsg.local",
+            "deviceType": "Cisco Catalyst 29xx Stack-able Ethernet Switch",
+            "ipAddress": "10.20.4.13",
+            "locationCapable": false,
+            "productFamily": "Switches and Hubs",
+            "reachability": "REACHABLE",
+            "softwareVersion": "15.2(6)E1",
+            "systemTime": "2020-04-07T14:29:39.000Z",
+            "upTime": 15831359691
+          },
+          "vlanInterfaces": {
+            "vlanInterface": [
+              {
+                "adminStatus": "UP",
+                "maxSpeed": 1000000000,
+                "mtu": 1500,
+                "operationalStatus": "UP",
+                "portName": "Vlan204",
+                "portType": "PROPVIRTUAL",
+                "vlanId": 204
+              },
+              {
+                "adminStatus": "DOWN",
+                "maxSpeed": 1000000000,
+                "mtu": 1500,
+                "operationalStatus": "DOWN",
+                "portName": "Vlan1",
+                "portType": "PROPVIRTUAL",
+                "vlanId": 1
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

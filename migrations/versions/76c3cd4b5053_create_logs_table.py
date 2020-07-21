@@ -20,12 +20,15 @@ def upgrade():
     op.create_table(
         'logs',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('event_type', sa.String(30), nullable=False),
-        sa.Column('event_result', sa.String(30), nullable=False),
-        sa.Column('entity', sa.String(30), nullable=False),
-        sa.Column('payload', sa.String(500), nullable=True),
-        sa.Column('user_id', sa.String(255), nullable=False),
-        sa.Column('date', sa.DateTime, nullable=False)
+        sa.Column('http_method', sa.String(30), nullable=True),
+        sa.Column('http_url', sa.String(255), nullable=True),
+        sa.Column('payload', sa.String(1000), nullable=True),
+        sa.Column('user_name', sa.String(255), nullable=False),
+        sa.Column('user_email', sa.String(255), nullable=True),
+        sa.Column('response_status_code', sa.Integer, nullable=True),
+        sa.Column('message', sa.String(255), nullable=True),
+        sa.Column('date_start', sa.DateTime, nullable=False),
+        sa.Column('date_end', sa.DateTime, nullable=False)
     )
 
 

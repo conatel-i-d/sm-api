@@ -7,35 +7,63 @@ aplicación.
 import asyncio
 from app.switch.service import SwitchService
 from app.jobs.service import JobService
+from app.utils.prime import prime_fetch
+from app.errors import ApiException, SwitchNotFound
+
 
 class NicsService:
     @staticmethod
     async def reset_switch_nic(switch_id, nic_name):
-        switch = SwitchService.get_by_id(switch_id)
+        switch = await SwitchService.get_by_id(switch_id)
         if switch == None:
             raise SwitchNotFound
         extra_vars = dict(interface_name=nic_name)
         body = dict(limit=switch.name, extra_vars=extra_vars)
         return await JobService.run_job_template_by_name('reset-interface', body)
 
-
     @staticmethod
     async def get_by_switch_id(switch_id):
         """
         Devuelve la información de todas las interfaces a través
         del AWX, quien consulta directamente al switch.
-        
+
         Args:
         switch_id (int): Identidad del switch
         """
-        switch = SwitchService.get_by_id(switch_id)
+        switch = await SwitchService.get_by_id(switch_id)
         if switch == None:
             raise SwitchNotFound
         extra_vars = dict(something='awesome')
         body = dict(limit=switch.name, extra_vars=extra_vars)
-        result = await JobService.run_job_template_by_name('show-interfaces-information', body)
-        return result
+        sw_result = await JobService.run_job_template_by_name('show-interfaces-information', body)
+        try:
+            result = dict()
+            prime_result = await NicsService.get_from_prime_by_switch_id(switch_id)
+            for key, value in sw_result.items():
+                if key in prime_result:
+                    result[key] = { **prime_result[key], **value}
+                else:
+                    result[key] = value
+            return result
+        except Exception as err:
+            print(f'Switch no pertenece al prime. Error: {str(err)}', flush=True)
+        return sw_result
 
+    @staticmethod
+    async def get_from_prime_by_switch_id(switch_id):
+        """
+        Devuelve la información de todas las interfaces a través
+        del la api del Cisco Prime, quien consulta directamente al switch.
 
-class SwitchNotFound(Exception):
-    """No existe el switch"""
+        Args:
+        switch_id (int): Identidad del switch
+        """
+        result = dict()
+        try:
+            from_prime = await prime_fetch(f'/webacs/api/v4/data/InventoryDetails/{switch_id}.json')
+            for interface in from_prime['queryResponse']["entity"][0]["inventoryDetailsDTO"]["ethernetInterfaces"]["ethernetInterface"]:
+                result[interface["name"]] = interface
+            return result
+        except Exception as err:
+            print("Error in get_from_prime: " + str(err), flush=True)
+            raise ApiException("Error al cargar nics del Cisco Prime. Error: " + str(err))

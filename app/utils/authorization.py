@@ -23,7 +23,7 @@ def authorize(func):
         if not token:
             return ApiResponse({"Error": "Token not found"}, 400)
         try:
-            jwt.decode(token, PUBLIC_KEY, algorithms=['RS256'], audience='dashboard')
+            jwt.decode(token, PUBLIC_KEY, algorithms=['RS256'], audience='dashboard',options={ "leeway": 120, "verify_exp": False })
         except JWTError as error:
             raise ApiException(error)
         except JWTClaimsError as error:

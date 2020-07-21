@@ -22,3 +22,15 @@ class PlaybookTimeout(Exception):
 
 class PlaybookFailure(Exception):
     """Fallo la ejecución del playbook"""
+
+class ConnectToAwxFailure(Exception):
+    """Fallo al intentar conectarse con la api de AWX"""
+
+class PlaybookCancelFailure(Exception):
+    """Fallo la intentar cancelar un job"""
+
+class NicNotFound(Exception):
+    """No existe la nic"""
+
+class SwitchNotFound(Exception):
+    """No existe el switch"""
