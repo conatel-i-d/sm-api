@@ -45,7 +45,7 @@ mypy-extensions==0.4.1
 packaging==19.1
 paramiko==2.6.0
 pluggy==0.12.0
-py==1.8.0
+py==1.10.0
 pyasn1==0.4.8
 pycparser==2.19
 pylint==2.3.1
